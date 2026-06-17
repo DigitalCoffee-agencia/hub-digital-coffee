@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/aprovacao/*"
+  to = "/aprovacao.html"
+  status = 200
+
+[[redirects]]
+  from = "/cadastro/*"
+  to = "/cadastro.html"
+  status = 200
