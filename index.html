@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Coffee Hub</title>
+<title>Digital Coffee Hub — Sistema Operacional Interno</title>
+<meta name="description" content="Plataforma interna de gestão da agência Digital Coffee — clientes, agentes IA, financeiro e produção.">
+<meta property="og:title" content="Digital Coffee Hub">
+<meta property="og:description" content="Sistema operacional interno da Digital Coffee Agência.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hubdigitalcoffee.netlify.app/">
+<meta property="og:image" content="https://hubdigitalcoffee.netlify.app/assets/logo-dark.png">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -16,7 +25,7 @@
   --orange:#F97316;--orange-dim:rgba(249,115,22,.15);
   --green:#22C55E;--green-dim:rgba(34,197,94,.15);
   --red:#EF4444;--red-dim:rgba(239,68,68,.15);
-  --radius:14px;--radius-sm:8px;--radius-lg:20px;
+  --text:#FFFFFF;--radius:14px;--radius-sm:8px;--radius-lg:20px;
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
@@ -150,7 +159,7 @@ body.light .benicio-card{border-color:rgba(245,181,68,.3)}
 /* STAT CARDS */
 .stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px}
 .stat-card{padding:18px 20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);position:relative;overflow:hidden;cursor:pointer;transition:.25s;animation:cardIn .4s ease both}
-.stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+
 .alert{cursor:pointer;transition:.15s}
 .alert:hover{opacity:.85;transform:translateX(3px)}
 #toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
@@ -270,8 +279,8 @@ tr:last-child td{border-bottom:none}
 .benicio-av{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--gold-dim),var(--purple-dim));border:2px solid rgba(245,181,68,.4);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 
 /* ── CHAT ── */
-.chat-layout{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 112px);background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
-.chat-list{border-right:1px solid var(--border);overflow-y:auto}
+.chat-layout{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 112px);background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;position:relative}
+.chat-list{border-right:1px solid var(--border);overflow-y:auto;min-height:0}
 .chat-list-hd{padding:14px 16px;font-weight:700;font-size:13px;border-bottom:1px solid var(--border);background:var(--bg3)}
 .chat-item{padding:13px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:.15s}
 .chat-item:hover{background:rgba(255,255,255,.03)}
@@ -279,9 +288,9 @@ tr:last-child td{border-bottom:none}
 .ci-name{font-size:13px;font-weight:600;margin-bottom:2px}
 .ci-prev{font-size:11px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.chat-main{display:flex;flex-direction:column}
+.chat-main{display:flex;flex-direction:column;min-height:0;min-width:0}
 .chat-hd{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
-.chat-msgs{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:rgba(10,10,10,.5)}
+.chat-msgs{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:rgba(10,10,10,.5);min-height:0}
 .msg{max-width:68%;padding:12px 16px;border-radius:12px;font-size:13px;line-height:1.6}
 .msg-in{background:var(--bg3);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:3px}
 .msg-out{background:var(--gold-dim);border:1px solid rgba(245,181,68,.2);align-self:flex-end;border-bottom-right-radius:3px}
@@ -384,8 +393,8 @@ tr:last-child td{border-bottom:none}
 .ficha-hero-info{flex:1}
 .ficha-hero-name{font-size:22px;font-weight:800;margin-bottom:4px}
 .ficha-hero-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.ficha-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg2);padding:4px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow-x:auto}
-.ftab{padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;color:var(--gray);cursor:pointer;transition:.18s;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:6px}
+/* .ficha-tabs merged */
+/* .ftab merged */
 .ftab svg{width:13px;height:13px;fill:currentColor}
 .ftab:hover{color:var(--white);background:var(--bg3)}
 .ftab.active{background:var(--gold);color:#000}
@@ -615,7 +624,7 @@ select option{background:#141414;color:#f0f0f0}
 .form-input,.form-select,.form-textarea{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-size:13px;color:var(--white);font-family:inherit;outline:none;transition:.18s;width:100%;box-sizing:border-box}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);background:var(--bg)}
 .form-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:18px;padding-right:32px}
-.form-select option{background:var(--bg2)}
+.form-select option{background:#141414;color:#f0f0f0}
 .form-textarea{resize:vertical;min-height:72px;line-height:1.5}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -1028,10 +1037,10 @@ body.edit-mode .edit-banner{display:block}
       <img src="assets/logo-white.png" alt="Digital Coffee" id="login-logo-img" style="width:200px;opacity:.95">
     </div>
     <div class="login-sub">Sistema Operacional Interno</div>
-    <div class="login-field"><input type="email" id="le" placeholder="seu@email.com" value="adigitalcoffee@gmail.com"></div>
+    <div class="login-field"><input type="email" id="le" placeholder="seu@email.com" autocomplete="email"></div>
     <div class="login-field"><input type="password" id="lp" placeholder="Senha" value=""></div>
     <button class="btn-login" onclick="doLogin()">Entrar no Hub</button>
-    <div class="login-hint">Acesso interno Digital Coffee — qualquer senha</div>
+    <div class="login-hint">Acesso restrito — Digital Coffee Agência</div>
   </div>
 </div>
 
@@ -1039,7 +1048,7 @@ body.edit-mode .edit-banner{display:block}
 <div id="app">
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <img src="assets/logo-white.png" alt="Digital Coffee Hub" id="sidebar-logo-img" style="max-height:36px;width:auto;object-fit:contain;opacity:.92">
+      <img src="assets/logo-white.png" alt="Digital Coffee Hub" id="sidebar-logo-img" style="max-height:36px;width:auto;object-fit:contain;opacity:.92" loading="lazy">
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">Principal</div>
@@ -1073,7 +1082,7 @@ body.edit-mode .edit-banner{display:block}
 
   <main class="main">
     <div class="topbar">
-      <button id="mob-menu-btn" class="topbar-btn" onclick="document.querySelector('.sidebar').classList.toggle('mob-open')" style="display:none"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
+      <button id="mob-menu-btn" class="topbar-btn" aria-label="Abrir menu" onclick="document.querySelector('.sidebar').classList.toggle('mob-open')"/></svg></button>
       <button id="btn-voltar" onclick="voltarPagina()" title="Voltar" style="display:none;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:8px;color:var(--gray);cursor:pointer;font-size:12px;font-family:inherit;padding:6px 12px;transition:.15s;white-space:nowrap;flex-shrink:0" onmouseover="this.style.color='var(--white)';this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.color='var(--gray)';this.style.background='rgba(255,255,255,.07)'"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>Voltar</button>
       <div class="topbar-title" id="page-title">Dashboard</div>
       <div class="topbar-search"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:rgba(255,255,255,.35);flex-shrink:0"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg><input placeholder="Buscar cliente, agente, tarefa..."></div>
@@ -1288,7 +1297,7 @@ body.edit-mode .edit-banner{display:block}
         <div class="cli-card" onclick="openFicha('Dr. Vitor')">
           <div class="cli-card-top"><div class="cli-av" style="background:linear-gradient(135deg,#14b8a6,#0f766e)">DV</div><div><div class="cli-name">Dr. Vitor D'Ângeles</div><div class="cli-segment">Medicina · Pirapora MG</div></div></div>
           <div class="cli-info">
-            <div class="cli-info-row"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Dr. Vitor D'Angelis</div>
+            <div class="cli-info-row"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Dr. Vitor D'Ângeles</div>
             <div class="cli-info-row"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.26 1.02l-2.2 2.2z"/></svg>38 99821-4426</div>
             <div class="cli-info-row"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>Social Media + Tráfego · Vence dia 15</div>
           </div>
@@ -1359,7 +1368,7 @@ body.edit-mode .edit-banner{display:block}
         <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0">
           <div class="ficha-av-big" id="ficha-av" style="background:linear-gradient(135deg,#06b6d4,#0284c7);cursor:pointer;position:relative;overflow:hidden" onclick="document.getElementById('ficha-foto-input').click()" title="Clique para alterar a foto">
             <span id="ficha-av-initials">FV</span>
-            <img id="ficha-av-img" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit">
+            <img id="ficha-av-img" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit" loading="lazy">
             <div style="position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;border-radius:inherit" id="ficha-av-overlay"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
           </div>
           <span style="font-size:10px;color:var(--gray);cursor:pointer" onclick="document.getElementById('ficha-foto-input').click()">Trocar foto</span>
@@ -1907,7 +1916,7 @@ body.edit-mode .edit-banner{display:block}
           </div>
           <div class="form-group"><label class="form-label">Convidados (e-mails)</label><input class="form-input" id="meet-emails" placeholder="email1@dominio.com, email2@dominio.com"><div style="font-size:10px;color:var(--gray2);margin-top:4px">Separe múltiplos e-mails por vírgula.</div></div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-foot">
           <button class="btn btn-ghost" onclick="fecharNovaMeet()">Cancelar</button>
           <button class="btn" onclick="agendarMeet()" style="background:#4285f4;color:#fff;border:none;display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#fff"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>Agendar com Meet</button>
         </div>
@@ -1961,7 +1970,7 @@ body.edit-mode .edit-banner{display:block}
           </div>
         </div>
         <!-- PAINEL DIREITO - INFO DO CONTATO -->
-        <div id="chat-info-panel" style="width:220px;min-width:180px;border-left:1px solid var(--border);display:flex;flex-direction:column;gap:0;overflow-y:auto;display:none">
+        <div id="chat-info-panel" style="position:absolute;top:0;right:0;width:220px;height:100%;border-left:1px solid var(--border);background:var(--bg2);display:none;flex-direction:column;gap:0;overflow-y:auto;z-index:10;box-shadow:-4px 0 20px rgba(0,0,0,.4)">
           <div style="padding:14px 12px;border-bottom:1px solid var(--border)">
             <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:10px">
               <div id="cip-av" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:16px">?</div>
@@ -1998,6 +2007,7 @@ body.edit-mode .edit-banner{display:block}
           <span class="badge b-green">● 14 Online</span>
           <span class="badge b-gray">○ 6 Standby</span>
           <button class="btn btn-gold" onclick="abrirOnboarding()" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>🚀 Novo Cliente — Onboarding</button>
+          <button class="btn" onclick="abrirSwarmSocialMedia()" style="background:linear-gradient(135deg,#a855f7,#3b82f6);color:#fff;border:none;display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>⚡ Swarm Social Media</button>
         </div>
       </div>
 
@@ -2006,61 +2016,61 @@ body.edit-mode .edit-banner{display:block}
         <div class="pilar-card pilar-gold">
           <div class="pilar-title" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Liderança</div>
           <div class="pilar-sub">Tomada de decisões estratégicas</div>
-          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/CAMILA SANTOS.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Camila Santos</div><div class="ag-rl">CEO · Direção Geral</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/JOSÉ.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">José</div><div class="ag-rl">Gestão Operacional</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/FABIANA NASCIMENTO.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Fabiana</div><div class="ag-rl">Controle de Qualidade</div></div><div class="ag-status st-busy"></div></div>
-          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/MIKAEL SANTOS.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Mikael</div><div class="ag-rl">Gestão de Performance</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/CAMILA SANTOS.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Camila Santos" loading="lazy"></div><div><div class="ag-nm">Camila Santos</div><div class="ag-rl">CEO · Direção Geral</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/JOSÉ.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="José" loading="lazy"></div><div><div class="ag-nm">José</div><div class="ag-rl">Gestão Operacional</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/FABIANA NASCIMENTO.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Fabiana Nascimento" loading="lazy"></div><div><div class="ag-nm">Fabiana</div><div class="ag-rl">Controle de Qualidade</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-gold" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/MIKAEL SANTOS.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Mikael Santos" loading="lazy"></div><div><div class="ag-nm">Mikael</div><div class="ag-rl">Gestão de Performance</div></div><div class="ag-status st-on"></div></div>
         </div>
 
         <!-- AQUISIÇÃO -->
         <div class="pilar-card pilar-blue">
           <div class="pilar-title" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>Aquisição</div>
           <div class="pilar-sub">Responsável pelo crescimento</div>
-          <div class="agente"><div class="ag-av ag-blue" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/KAKA SANTOS.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Kaka Santos</div><div class="ag-rl">Especialista em Tráfego Pago</div></div><div class="ag-status st-busy"></div></div>
-          <div class="agente"><div class="ag-av ag-blue" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/NOAH.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Noah</div><div class="ag-rl">Especialista em SEO</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-blue" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/KAKA SANTOS.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Kaka Santos" loading="lazy"></div><div><div class="ag-nm">Kaka Santos</div><div class="ag-rl">Especialista em Tráfego Pago</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-blue" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/NOAH.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Noah" loading="lazy"></div><div><div class="ag-nm">Noah</div><div class="ag-rl">Especialista em SEO</div></div><div class="ag-status st-busy"></div></div>
         </div>
 
         <!-- CONTEÚDO -->
         <div class="pilar-card pilar-purple">
           <div class="pilar-title" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>Conteúdo</div>
           <div class="pilar-sub">Planejamento e produção editorial</div>
-          <div class="agente"><div class="ag-av ag-purple" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/FLÁVIA SILVA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Flávia</div><div class="ag-rl">Planejamento Editorial</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-purple" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/RAFA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Rafa</div><div class="ag-rl">Redação e Storytelling</div></div><div class="ag-status st-busy"></div></div>
-          <div class="agente"><div class="ag-av ag-purple" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/KATIA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Katia</div><div class="ag-rl">Social Media</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-purple" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/FLÁVIA SILVA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Flávia Silva" loading="lazy"></div><div><div class="ag-nm">Flávia</div><div class="ag-rl">Planejamento Editorial</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-purple" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/RAFA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Rafa" loading="lazy"></div><div><div class="ag-nm">Rafa</div><div class="ag-rl">Redação e Storytelling</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-purple" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/KATIA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Katia" loading="lazy"></div><div><div class="ag-nm">Katia</div><div class="ag-rl">Social Media</div></div><div class="ag-status st-on"></div></div>
         </div>
 
         <!-- CRIAÇÃO -->
         <div class="pilar-card pilar-orange">
           <div class="pilar-title" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>Criação</div>
           <div class="pilar-sub">Design, copy e motion</div>
-          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/CAUÃ.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Cauã</div><div class="ag-rl">Direção de Design · GPT-4o</div></div><div class="ag-status st-busy"></div></div>
-          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/MILA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Mila</div><div class="ag-rl">Copywriter · Claude</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/LEVY.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Levy</div><div class="ag-rl">Designer Criativo</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/VICENTE.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Vicente</div><div class="ag-rl">Motion Designer</div></div><div class="ag-status st-off"></div></div>
+          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/CAUÃ.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Cauã" loading="lazy"></div><div><div class="ag-nm">Cauã</div><div class="ag-rl">Direção de Design · GPT-4o</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/MILA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Mila" loading="lazy"></div><div><div class="ag-nm">Mila</div><div class="ag-rl">Copywriter · Claude</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/LEVY.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Levy" loading="lazy"></div><div><div class="ag-nm">Levy</div><div class="ag-rl">Designer Criativo</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-orange" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/VICENTE.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Vicente" loading="lazy"></div><div><div class="ag-nm">Vicente</div><div class="ag-rl">Motion Designer</div></div><div class="ag-status st-off"></div></div>
         </div>
 
         <!-- TECNOLOGIA -->
         <div class="pilar-card pilar-green">
           <div class="pilar-title" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>Tecnologia & Ops</div>
           <div class="pilar-sub">Dev, automações e sistemas</div>
-          <div class="agente"><div class="ag-av ag-green" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/BÊNJAMIM.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Benjamim</div><div class="ag-rl">Dev · Sites · Claude Opus</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-green" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/ANA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Ana</div><div class="ag-rl">Operações · APIs · Automações</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-green" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/BÊNJAMIM.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Benjamim" loading="lazy"></div><div><div class="ag-nm">Benjamim</div><div class="ag-rl">Dev · Sites · Claude Opus</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-green" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/ANA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Ana" loading="lazy"></div><div><div class="ag-nm">Ana</div><div class="ag-rl">Operações · APIs · Automações</div></div><div class="ag-status st-busy"></div></div>
         </div>
 
         <!-- COMERCIAL -->
         <div class="pilar-card pilar-red">
           <div class="pilar-title" style="display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M20 6h-2.18c.07-.44.18-.86.18-1.3C18 3.12 16.88 2 15.5 2c-.88 0-1.63.43-2.07 1.1L12 5 10.57 3.1C10.13 2.43 9.38 2 8.5 2 7.12 2 6 3.12 6 4.7c0 .44.11.86.18 1.3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-5.5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM8.5 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM20 19H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>Comercial & Financeiro</div>
           <div class="pilar-sub">Vendas, CS e financeiro</div>
-          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/TUTY.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Tuty</div><div class="ag-rl">Closer · Fechamentos</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/DIDA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Dida</div><div class="ag-rl">SDR · Prospecção</div></div><div class="ag-status st-busy"></div></div>
-          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/LUNA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Luna</div><div class="ag-rl">Customer Success · Claude</div></div><div class="ag-status st-on"></div></div>
-          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/CAIO.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"></div><div><div class="ag-nm">Caio</div><div class="ag-rl">Financeiro · Cobranças</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/TUTY.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Tuty" loading="lazy"></div><div><div class="ag-nm">Tuty</div><div class="ag-rl">Closer · Fechamentos</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/DIDA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Dida" loading="lazy"></div><div><div class="ag-nm">Dida</div><div class="ag-rl">SDR · Prospecção</div></div><div class="ag-status st-busy"></div></div>
+          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/LUNA.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Luna" loading="lazy"></div><div><div class="ag-nm">Luna</div><div class="ag-rl">Customer Success · Claude</div></div><div class="ag-status st-on"></div></div>
+          <div class="agente"><div class="ag-av ag-red" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/CAIO.png" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="Caio" loading="lazy"></div><div><div class="ag-nm">Caio</div><div class="ag-rl">Financeiro · Cobranças</div></div><div class="ag-status st-on"></div></div>
         </div>
       </div>
 
       <!-- BENÍCIO -->
       <div class="benicio-card">
-        <div class="benicio-av" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/BENÍCIO.png" style="width:100%;height:100%;object-fit:cover;border-radius:16px" loading="lazy"></div>
+        <div class="benicio-av" style="padding:0;overflow:hidden"><img src="AVATAR AGENTES - CHAT/BENÍCIO.png" style="width:100%;height:100%;object-fit:cover;border-radius:16px" alt="Benício" loading="lazy"></div>
         <div style="flex:1">
           <div style="font-size:14px;font-weight:800;color:var(--gold);margin-bottom:2px">Benício — IA Estratégica Independente</div>
           <div style="font-size:12px;color:var(--gray);margin-bottom:10px">Circula entre todos os pilares. Não pertence a nenhum setor.</div>
@@ -2496,7 +2506,7 @@ body.edit-mode .edit-banner{display:block}
             <div class="chart-bar" style="height:82%" title="Mai"><div style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--gray);white-space:nowrap">Mai</div></div>
             <div class="chart-bar" style="height:100%;background:var(--gold);border-color:rgba(245,181,68,.5)" title="Jun R$147k"><div style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--gold);white-space:nowrap;font-weight:700">Jun</div></div>
           </div>
-          <div style="margin-top:30px;font-size:12px;color:var(--gray)">R$98k → R$147k em 6 meses <span style="color:var(--green)">+50%</span></div>
+          <div style="margin-top:30px;font-size:12px;color:var(--gray)">R$3,2k → R$7,8k em 6 meses <span style="color:var(--green)">+144%</span></div>
         </div>
         <div class="glass pad"><div class="sec-title mb16">Top Clientes por Valor</div>
           <div class="tbl-wrap"><table><thead><tr><th>Cliente</th><th>Valor</th><th>% do MRR</th></tr></thead>
@@ -2526,7 +2536,7 @@ body.edit-mode .edit-banner{display:block}
       <div id="ci-tab-chat" class="ci-layout">
         <div class="ci-chat">
           <div class="ci-chat-hd">
-            <div class="ci-logo" style="padding:0;overflow:hidden;border-radius:10px"><img src="AVATAR AGENTES - CHAT/BENÍCIO.png" alt="Coffezinho" style="width:100%;height:100%;object-fit:cover;border-radius:10px"><div class="ci-pulse"></div></div>
+            <div class="ci-logo" style="padding:0;overflow:hidden;border-radius:10px"><img src="AVATAR AGENTES - CHAT/BENÍCIO.png" alt="Coffezinho" style="width:100%;height:100%;object-fit:cover;border-radius:10px" loading="lazy"><div class="ci-pulse"></div></div>
             <div>
               <div style="font-weight:700;font-size:14px;color:var(--gold)">Coffezinho</div>
               <div style="font-size:11px;color:var(--gray)">IA Estratégica · Atualizações em Tempo Real</div>
@@ -2537,7 +2547,7 @@ body.edit-mode .edit-banner{display:block}
             <div class="ci-msg-ai">Olá, Camila! Sou o <strong>Coffezinho</strong>, sua IA estratégica de tendências e atualizações em tempo real.<br><br>Analisei os dados desta semana e tenho <strong>3 alertas importantes</strong>:<br><br><strong>Reforma Tributária</strong> — 10 dias de atraso. Risco de churn se não entrar em contato hoje.<br><strong>Fisio Vida</strong> — engajamento caiu 12% na semana 2. Recomendo ajustar horário de publicação.<br><strong>Disque Pet</strong> — Meta Ads ROAS 4.2. Oportunidade de escalar budget.</div>
           </div>
           <div class="ci-ft">
-            <input id="ci-input" placeholder="Pergunte algo sobre clientes, campanhas, finanças, tendências..." onkeydown="if(event.key==='Enter')sendCI()">
+            <input id="ci-input" placeholder="Pergunte algo sobre clientes, campanhas, finanças, tendências..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendCI()}">
             <button class="btn btn-gold" onclick="sendCI()">Analisar</button>
           </div>
         </div>
@@ -3330,11 +3340,11 @@ body.edit-mode .edit-banner{display:block}
               <div class="apr-acc-body">
                 <div style="font-size:11px;color:var(--gray);margin-bottom:6px">Logo (opcional) · Logo da Página de Orçamento</div>
                 <label class="apr-upload" id="apr-logo-label" style="cursor:pointer;display:block;text-align:center">↑ Enviar logo (PNG/JPG até 4MB)<input type="file" accept="image/*" style="display:none" onchange="aprHandleLogo(this,'logo')"></label>
-                <div id="apr-logo-preview" style="display:none;margin-top:8px;text-align:center"><img id="apr-logo-img" style="max-height:60px;max-width:200px;object-fit:contain;border-radius:6px;background:rgba(255,255,255,.05);padding:4px"><button onclick="aprRemoverLogo('logo')" style="display:block;margin:4px auto 0;font-size:11px;background:none;border:none;color:var(--red);cursor:pointer">✕ Remover</button></div>
+                <div id="apr-logo-preview" style="display:none;margin-top:8px;text-align:center"><img id="apr-logo-img" style="max-height:60px;max-width:200px;object-fit:contain;border-radius:6px;background:rgba(255,255,255,.05);padding:4px" loading="lazy"><button onclick="aprRemoverLogo('logo')" style="display:block;margin:4px auto 0;font-size:11px;background:none;border:none;color:var(--red);cursor:pointer">✕ Remover</button></div>
                 <div class="apr-dim">500×200px</div>
                 <div style="font-size:11px;color:var(--gray);margin:12px 0 6px">Favicon (opcional)</div>
                 <label class="apr-upload" id="apr-fav-label" style="cursor:pointer;display:block;text-align:center">↑ Enviar favicon (PNG/JPG até 4MB)<input type="file" accept="image/*" style="display:none" onchange="aprHandleLogo(this,'fav')"></label>
-                <div id="apr-fav-preview" style="display:none;margin-top:8px;text-align:center"><img id="apr-fav-img" style="max-height:32px;max-width:32px;object-fit:contain;border-radius:4px;background:rgba(255,255,255,.05);padding:2px"><button onclick="aprRemoverLogo('fav')" style="display:block;margin:4px auto 0;font-size:11px;background:none;border:none;color:var(--red);cursor:pointer">✕ Remover</button></div>
+                <div id="apr-fav-preview" style="display:none;margin-top:8px;text-align:center"><img id="apr-fav-img" style="max-height:32px;max-width:32px;object-fit:contain;border-radius:4px;background:rgba(255,255,255,.05);padding:2px" loading="lazy"><button onclick="aprRemoverLogo('fav')" style="display:block;margin:4px auto 0;font-size:11px;background:none;border:none;color:var(--red);cursor:pointer">✕ Remover</button></div>
                 <div class="apr-dim">64×64px</div>
               </div>
             </div>
@@ -3414,7 +3424,7 @@ body.edit-mode .edit-banner{display:block}
               <div class="sec-sub" style="font-size:12px;margin-bottom:14px">Personalize a logo e o banner exibidos no topo do PDF.</div>
               <div style="font-size:11px;color:var(--gray);margin-bottom:6px;font-weight:600">Logo do cabeçalho <span style="color:var(--gray2)">(substitui a do perfil)</span></div>
               <label class="apr-upload" id="pdf-logo-label" style="cursor:pointer;display:block">↑ Enviar logo (PNG/JPG até 4MB)<input type="file" accept="image/*" style="display:none" onchange="handlePdfLogoUpload(this)"></label>
-              <div id="pdf-logo-preview" style="display:none;margin-top:8px;text-align:center"><img id="pdf-logo-img" style="max-height:50px;max-width:180px;object-fit:contain;border-radius:6px;background:rgba(255,255,255,.05);padding:6px"><button onclick="removerPdfLogo()" style="display:block;margin:6px auto 0;font-size:11px;background:none;border:none;color:var(--red);cursor:pointer">✕ Remover</button></div>
+              <div id="pdf-logo-preview" style="display:none;margin-top:8px;text-align:center"><img id="pdf-logo-img" style="max-height:50px;max-width:180px;object-fit:contain;border-radius:6px;background:rgba(255,255,255,.05);padding:6px" loading="lazy"><button onclick="removerPdfLogo()" style="display:block;margin:6px auto 0;font-size:11px;background:none;border:none;color:var(--red);cursor:pointer">✕ Remover</button></div>
               <div style="font-size:11px;color:var(--gray);margin-bottom:6px;font-weight:600;margin-top:12px">Selecionar orçamento para o PDF</div>
               <select class="form-select" id="pdf-orc-select" style="margin-bottom:8px"><option value="">— Orçamento mais recente —</option></select>
               <div style="font-size:10px;color:var(--gray2)">O PDF será gerado com os dados do orçamento selecionado.</div>
@@ -3925,10 +3935,11 @@ function runCounters() {
   });
   const mrr = document.getElementById('mrr-counter');
   if (mrr) {
-    let v = 0; const t = 147000;
+    // MRR real: soma dos clientes ativos (R$7.880 conforme dados cadastrados)
+    let v = 0; const t = 7880;
     const iv = setInterval(() => {
-      v = Math.min(v + 3000, t);
-      mrr.textContent = 'R$' + (v/1000).toFixed(0) + 'k';
+      v = Math.min(v + 200, t);
+      mrr.textContent = 'R$' + v.toLocaleString('pt-BR');
       if (v >= t) clearInterval(iv);
     }, 16);
   }
@@ -3975,7 +3986,7 @@ function _restaurarTodasFotosClientes() {
           av.style.background = 'transparent';
           av.style.overflow = 'hidden';
           av.style.padding = '0';
-          av.innerHTML = '<img src="' + foto + '" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">';
+          av.innerHTML = '<img src="' + foto + '" style="width:100%;height:100%;object-fit:cover;border-radius:inherit" loading="lazy">';
         }
       }
     });
@@ -4030,8 +4041,7 @@ function goTo(page, navEl) {
   if (page !== 'conversas') {
     var cipanel = document.getElementById('chat-info-panel');
     if (cipanel) cipanel.style.display = 'none';
-    var layout = document.querySelector('.chat-layout');
-    if (layout) layout.style.gridTemplateColumns = '';
+    // Grid não precisa ser resetado — painel é position:absolute
   }
   // Init de páginas específicas
   if (page === 'briefing') setTimeout(function(){ if(typeof renderBriefingLista==='function') renderBriefingLista(briefingData); }, 50);
@@ -4235,10 +4245,24 @@ async function _recarregarConversas() {
   try {
     const d = await (await fetch(_LUNA_CONV_LIST)).json();
     _convChats = (d.chats || []).map(function(c) {
-      var num = c.numero || (c.chatId && !c.chatId.includes('@g.us') ? c.chatId.replace(/@c\.us|@lid/g,'') : '');
+      var rawId = c.chatId || '';
+      var isGroup = rawId.includes('@g.us');
+      // Tenta extrair número: prefere c.numero ou c.phone,
+      // extrai de @c.us, mas ignora @lid (não é número legível)
+      var num = c.numero || c.phone || c.whatsapp || '';
+      if(!num && rawId.includes('@c.us')) num = rawId.replace('@c.us','');
+      // @lid = identificador interno do WhatsApp, não é número
+      if(rawId.includes('@lid') && !c.numero && !c.phone) num = '';
+      // Formata número BR se começa com 55
+      if(num && num.startsWith('55') && num.length >= 12) {
+        var d2 = num.substring(2); // remove 55
+        if(d2.length === 11) num = '(' + d2.substring(0,2) + ') ' + d2.substring(2,7) + '-' + d2.substring(7);
+        else if(d2.length === 10) num = '(' + d2.substring(0,2) + ') ' + d2.substring(2,6) + '-' + d2.substring(6);
+      }
       return Object.assign({}, c, {
-        lastMsg:  c.lastMsg  || c.ultima     || '',
-        lastTime: c.lastTime || c.ultimaHora || '',
+        isGroup: isGroup,
+        lastMsg:  c.lastMsg  || c.ultima     || c.lastMessage || '',
+        lastTime: c.lastTime || c.ultimaHora || c.timestamp   || '',
         numero: num
       });
     });
@@ -4303,26 +4327,48 @@ async function _abrirConversa(idx) {
   // Input
   document.getElementById('conv-input').disabled = false;
   document.getElementById('conv-send-btn').disabled = false;
-  // Mensagens
+  // Mensagens — tenta hub-conversas-msgs, fallback para estado vazio elegante
   const msgsEl = document.getElementById('conv-msgs');
-  msgsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:12px">Carregando mensagens...</div>';
+  msgsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:8px"><div class="ci-dot" style="width:6px;height:6px;animation:ciDot 1.2s infinite"></div><span>Carregando mensagens...</span></div>';
   try {
-    const d = await (await fetch(_LUNA_CONV_MSGS + '?chatId=' + encodeURIComponent(c.chatId))).json();
-    const msgs = d.messages || [];
+    const resp = await fetch(_LUNA_CONV_MSGS + '?chatId=' + encodeURIComponent(c.chatId));
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const d = await resp.json();
+    const msgs = d.messages || d.msgs || [];
     if (!msgs.length) {
-      msgsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray);font-size:12px">Nenhuma mensagem encontrada.</div>';
+      msgsEl.innerHTML = _convMsgVazia(c);
       return;
     }
-    msgsEl.innerHTML = msgs.map(m =>
-      '<div class="msg ' + (m.fromMe ? 'msg-out' : 'msg-in') + '">'
-      + '<div>' + m.body.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>') + '</div>'
-      + '<div class="msg-time">' + m.hora + '</div>'
-      + '</div>'
-    ).join('');
+    msgsEl.innerHTML = msgs.map(function(m) {
+      var body = (m.body || m.text || m.content || '').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+      var hora = m.hora || m.time || m.timestamp || '';
+      if(hora && typeof hora === 'number') hora = new Date(hora*1000).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+      return '<div class="msg ' + (m.fromMe ? 'msg-out' : 'msg-in') + '">'
+        + '<div>' + body + '</div>'
+        + (hora ? '<div class="msg-time">' + hora + '</div>' : '')
+        + '</div>';
+    }).join('');
     msgsEl.scrollTop = msgsEl.scrollHeight;
   } catch(e) {
-    msgsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--red);font-size:12px">Erro ao carregar mensagens.</div>';
+    // Workflow hub-conversas-msgs não existe ainda no n8n — mostrar estado funcional
+    msgsEl.innerHTML = _convMsgVazia(c);
   }
+}
+
+function _convMsgVazia(c) {
+  // Monta número para link do WhatsApp Web
+  var num = (c.numero || '').replace(/\D/g,'');
+  var wppLink = num ? 'https://wa.me/' + num : '';
+  var isGroup = c.isGroup || (c.chatId||'').includes('@g.us');
+  return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;padding:20px;text-align:center">'
+    + '<svg viewBox="0 0 24 24" style="width:42px;height:42px;fill:var(--border)"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>'
+    + '<div style="font-size:13px;font-weight:600;color:var(--white)">' + (c.nome||'Contato') + '</div>'
+    + '<div style="font-size:12px;color:var(--gray);max-width:240px;line-height:1.5">'
+    + (isGroup ? 'Histórico de grupos disponível apenas via WhatsApp.' : 'Histórico em tempo real disponível quando o workflow <code style="font-size:11px;background:var(--bg3);padding:1px 4px;border-radius:3px">hub-conversas-msgs</code> estiver ativo no n8n.')
+    + '</div>'
+    + (wppLink ? '<a href="' + wppLink + '" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);color:#25d366;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;text-decoration:none">📲 Abrir no WhatsApp Web</a>' : '')
+    + '<div style="font-size:11px;color:var(--gray2)">Você ainda pode enviar mensagens abaixo ↓</div>'
+    + '</div>';
 }
 
 function _atualizarModeBtn(humano) {
@@ -4421,9 +4467,30 @@ async function sendCI() {
     _benicioHistory.push({role: 'assistant', content: resp});
     msgs.innerHTML += `<div class="ci-msg-ai">${resp.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div>`;
   } catch(e) {
-    _benicioHistory.pop(); // remove a pergunta que não teve resposta
-    thinkEl.remove();
-    msgs.innerHTML += `<div class="ci-msg-ai">Erro de conexão. Verifique a Luna e tente novamente.</div>`;
+    // Fallback: Anthropic API direta se Luna estiver offline
+    try {
+      const agencyContext = `Você é o Coffezinho, IA estratégica da agência Digital Coffee de Pirapora MG. Dados da agência: 14 clientes ativos, MRR ~R$7.880, equipe: Rafael (designer), Levy (videomaker), Camila (CEO), agentes IA Luna, Mila, Kaka, Noah, Cauã, Benjamim. Responda com insights práticos sobre marketing digital, gestão de agência, clientes e estratégias. Use dados reais da agência quando relevante.`;
+      const histMsgs = _benicioHistory.slice(-12).map(h => ({role: h.role, content: h.content}));
+      const ar = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 800, system: agencyContext, messages: histMsgs })
+      });
+      thinkEl.remove();
+      if (ar.ok) {
+        const ad = await ar.json();
+        const resp = ad.content && ad.content[0] ? ad.content[0].text : 'Não consegui processar agora.';
+        _benicioHistory.push({role: 'assistant', content: resp});
+        msgs.innerHTML += `<div class="ci-msg-ai">${resp.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div>`;
+      } else {
+        _benicioHistory.pop();
+        msgs.innerHTML += `<div class="ci-msg-ai">Coffezinho temporariamente offline. Tente novamente em instantes.</div>`;
+      }
+    } catch(e2) {
+      _benicioHistory.pop();
+      thinkEl.remove();
+      msgs.innerHTML += `<div class="ci-msg-ai">Sem conexão no momento. Verifique a internet e tente novamente.</div>`;
+    }
   }
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -4845,7 +4912,7 @@ function _abrirCanvas(tipo) {
     +'<canvas id="ca-canvas" width="390" height="140" style="width:100%;height:140px;background:#fff;border-radius:8px;cursor:crosshair;touch-action:none"></canvas>'
     +'<div style="display:flex;gap:8px;margin-top:8px"><button onclick="_caLimpar()" style="flex:1;padding:7px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--gray);font-size:12px;cursor:pointer">🗑 Limpar</button></div>'
     +'</div>'
-    +(salva?'<div id="ca-area-salva" style="display:none;text-align:center"><img src="'+salva+'" style="max-width:100%;border-radius:8px;background:#fff;padding:8px"></div>':'')
+    +(salva?'<div id="ca-area-salva" style="display:none;text-align:center"><img src="'+salva+'" style="max-width:100%;border-radius:8px;background:#fff;padding:8px" loading="lazy"></div>':'')
     +'<div id="ca-area-sem" style="display:none;padding:20px;text-align:center;color:var(--gray);font-size:13px">Nenhuma assinatura será adicionada.</div>'
     +'<div style="display:flex;gap:8px;margin-top:14px">'
     +'<button onclick="document.getElementById(\'modal-canvas-assin\').style.display=\'none\'" style="flex:1;padding:10px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--gray);cursor:pointer;font-size:12px">Cancelar</button>'
@@ -4897,7 +4964,7 @@ function _aplicarAssinatura(tipo, dataUrl) {
   var imgEl = document.getElementById('assin-'+tipo+'-img');
   var vazioEl = document.getElementById('assin-'+tipo+'-vazio');
   if(!dataUrl) { if(imgEl)imgEl.style.display='none'; if(vazioEl)vazioEl.style.display='flex'; return; }
-  if(imgEl){ imgEl.style.display='block'; imgEl.innerHTML='<img src="'+dataUrl+'" style="max-height:70px;border-radius:4px;background:#fff;padding:4px">'; }
+  if(imgEl){ imgEl.style.display='block'; imgEl.innerHTML='<img src="'+dataUrl+'" style="max-height:70px;border-radius:4px;background:#fff;padding:4px" loading="lazy">'; }
   if(vazioEl) vazioEl.style.display='none';
   if(tipo==='camila') {
     var info = document.getElementById('assin-cliente-info');
@@ -4939,21 +5006,36 @@ function _renderListaFiltrada() {
 function _abrirPainelInfo(nome, fone, isGroup) {
   _wppContatoAtual = {nome:nome, fone:fone, isGroup:isGroup};
   var p = document.getElementById('chat-info-panel'); if(!p) return;
-  p.style.display = 'flex'; p.style.flexDirection = 'column';
-  // Atualiza grid para 3 colunas
-  var layout = document.querySelector('.chat-layout');
-  if(layout) layout.style.gridTemplateColumns = '260px 1fr 210px';
+  // Painel absoluto — nunca toca no grid, nunca espreme nada
+  p.style.display = 'flex';
+  p.style.flexDirection = 'column';
   var av = document.getElementById('cip-av');
-  var ini = nome.split(' ').map(function(w){return w[0]||'';}).join('').substring(0,2).toUpperCase();
+  var ini = (nome||'?').split(' ').map(function(w){return w[0]||'';}).join('').substring(0,2).toUpperCase();
   if(av) av.textContent = ini;
-  var nEl = document.getElementById('cip-nome'); if(nEl) nEl.textContent = nome;
-  var fEl = document.getElementById('cip-fone'); if(fEl) fEl.textContent = fone||'';
-  var nota = ''; try { nota = localStorage.getItem('wpp_nota_'+nome)||''; } catch(e){}
+  var nEl = document.getElementById('cip-nome'); if(nEl) nEl.textContent = nome||'';
+  // FIX 4: @lid → mostrar chatId limpo; número real se disponível
+  var foneDisplay = fone || '';
+  if(foneDisplay.includes('@lid')) foneDisplay = ''; // @lid não é número real
+  if(foneDisplay.includes('@c.us')) foneDisplay = foneDisplay.replace('@c.us','');
+  if(fone && fone.includes('@g.us')) foneDisplay = 'Grupo';
+  if(nEl) nEl.textContent = nome||'';
+  var fEl = document.getElementById('cip-fone'); if(fEl) fEl.textContent = foneDisplay || (isGroup ? 'Grupo' : 'Número não disponível');
+  var nota = '';
+  try { nota = (typeof localStorage !== 'undefined' && localStorage.getItem('wpp_nota_'+(nome||'')))||''; } catch(e){}
   var nta = document.getElementById('cip-nota'); if(nta) nta.value = nota;
-  // Verificar se tem pipeline
-  var fk = 'ficha_dados_'+nome.replace(/[^a-z0-9]/gi,'_');
   var pip = document.getElementById('cip-pipeline');
   if(pip) pip.style.display = 'none';
+  // Botão fechar flutuante no painel
+  var closeBtn = p.querySelector('.cip-close-btn');
+  if(!closeBtn) {
+    closeBtn = document.createElement('button');
+    closeBtn.className = 'cip-close-btn';
+    closeBtn.innerHTML = '×';
+    closeBtn.style.cssText = 'position:absolute;top:8px;right:8px;background:none;border:none;color:var(--gray);cursor:pointer;font-size:18px;line-height:1;z-index:1;padding:2px 6px;border-radius:4px';
+    closeBtn.addEventListener('click', function(){ p.style.display='none'; });
+    p.style.position = 'absolute'; // garantia
+    p.appendChild(closeBtn);
+  }
 }
 
 window._salvarNotaWpp = function() {
@@ -6017,7 +6099,7 @@ function salvarCliente() {
     const fotoImg = document.getElementById('mc-av-img');
     const fotoSrc = (fotoImg && fotoImg.style.display !== 'none' && fotoImg.src) ? fotoImg.src : null;
     const avatarHtml = fotoSrc
-      ? `<img src="${fotoSrc}" style="width:54px;height:54px;border-radius:12px;object-fit:cover;flex-shrink:0">`
+      ? `<img src="${fotoSrc}" style="width:54px;height:54px;border-radius:12px;object-fit:cover;flex-shrink:0" loading="lazy">`
       : `<div class="cli-av" style="background:${cor}">${ini}</div>`;
     card.innerHTML = `
       ${avatarHtml}
@@ -6373,7 +6455,7 @@ function _licitGerarRelatorio() {
   var logoSrc = (document.getElementById('sidebar-logo-img')||{}).src || 'assets/logo-white.png';
   var html=
     '<div class="licit-rpt-header">'+
-      '<img src="'+logoSrc+'" class="licit-rpt-logo" alt="Digital Coffee">'+
+      '<img src="'+logoSrc+'" class="licit-rpt-logo" alt="Digital Coffee" loading="lazy">'+
       '<div class="licit-rpt-title">RELATÓRIO<br>MENSAL</div>'+
       '<div class="licit-rpt-meta">'+
         '<div style="font-size:11px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Lassance</div>'+
@@ -7412,7 +7494,7 @@ function atualizarAvatarCartao(nome, url) {
         av.style.background='transparent';
         av.style.overflow='hidden';
         av.style.padding='0';
-        av.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">';
+        av.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:inherit" loading="lazy">';
       }
     }
   });
@@ -8446,7 +8528,7 @@ function handlePdfLogoUpload(input) {
     if(label) label.querySelector('span') && (label.childNodes[0].textContent = '✓ Logo carregada');
     // Update mini preview
     const miniLogo = document.getElementById('pdf-mini-logo-el');
-    if(miniLogo) miniLogo.innerHTML = '<img src="'+pdfLogoUrl+'" style="max-height:28px;max-width:120px;object-fit:contain">';
+    if(miniLogo) miniLogo.innerHTML = '<img src="'+pdfLogoUrl+'" style="max-height:28px;max-width:120px;object-fit:contain" loading="lazy">';
     atualizarPreviewPdf();
     toast('Logo carregada com sucesso!','t-green');
   };
@@ -8477,7 +8559,7 @@ function _buildPdfHtml(orc, corHeader, corDest, rodape) {
   var id       = orc ? orc.id       : 'ORC-001';
   var itens    = orc && orc.itens   ? orc.itens : [];
   var logoHtml = pdfLogoUrl
-    ? '<img src="'+pdfLogoUrl+'" style="max-height:60px;max-width:200px;object-fit:contain">'
+    ? '<img src="'+pdfLogoUrl+'" style="max-height:60px;max-width:200px;object-fit:contain" loading="lazy">'
     : '<div style="font-size:20px;font-weight:900;letter-spacing:2px;color:#fff">DIGITAL COFFEE</div>';
   var itensHtml = itens.map(function(it){
     return '<tr>'
@@ -8577,7 +8659,7 @@ function atualizarPreviewPdf() {
   const miniLogo = document.getElementById('pdf-mini-logo-el');
   if(miniLogo) {
     miniLogo.innerHTML = pdfLogoUrl
-      ? '<img src="'+pdfLogoUrl+'" style="max-height:22px;max-width:90px;object-fit:contain">'
+      ? '<img src="'+pdfLogoUrl+'" style="max-height:22px;max-width:90px;object-fit:contain" loading="lazy">'
       : '<span style="font-size:8px;font-weight:900;letter-spacing:1px;color:#fff">DIGITAL COFFEE</span>';
   }
 }
@@ -8868,11 +8950,12 @@ function appendAgMsg(text, container) {
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
 }
-function sendAgChat() {
+async function sendAgChat() {
   const input = document.getElementById('ag-chat-input');
   const text = input.value.trim();
   if(!text) return;
   input.value = '';
+  input.disabled = true;
   const msgs = document.getElementById('ag-chat-msgs');
   const userDiv = document.createElement('div');
   userDiv.className = 'ag-msg-user';
@@ -8886,9 +8969,36 @@ function sendAgChat() {
   msgs.appendChild(typing);
   msgs.scrollTop = msgs.scrollHeight;
   const data = agentesData[_agChatNome] || {};
-  const respostas = data.respostas || ['Entendido! Estou processando.'];
-  const r = respostas[Math.floor(Math.random()*respostas.length)];
-  setTimeout(() => { typing.remove(); appendAgMsg(r, msgs); }, 1200 + Math.random()*800);
+  // Construir system prompt baseado no agente
+  const systemPrompt = `Você é ${_agChatNome}, um agente especializado da agência Digital Coffee, uma agência de marketing digital em Pirapora MG. Seu cargo: ${data.cargo||'Especialista'}. Responda de forma prática, direta e focada no contexto da agência. A agência tem 14 clientes ativos, usa WhatsApp Business integrado com n8n, e os agentes são: Luna (atendimento), Mila (copy), Kaka (tráfego), Noah (SEO), Cauã (design), Benjamim (dev), entre outros. Mantenha um tom profissional mas próximo, como um colega de equipe.`;
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 600,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+    typing.remove();
+    if(response.ok) {
+      const d = await response.json();
+      const reply = d.content && d.content[0] && d.content[0].text ? d.content[0].text : 'Não consegui processar. Tente novamente.';
+      appendAgMsg(reply, msgs);
+    } else {
+      // Fallback para respostas locais se API falhar
+      const respostas = data.respostas || ['Entendido! Vou processar isso.'];
+      appendAgMsg(respostas[Math.floor(Math.random()*respostas.length)], msgs);
+    }
+  } catch(e) {
+    typing.remove();
+    const respostas = data.respostas || ['Entendido!'];
+    appendAgMsg(respostas[Math.floor(Math.random()*respostas.length)], msgs);
+  }
+  input.disabled = false;
+  input.focus();
 }
 // Clique nos cards de agente
 document.addEventListener('click', function(e) {
@@ -9304,7 +9414,7 @@ function exportarOnboarding() {
           <option value="Arruda Cozinha Vegana">Arruda Cozinha Vegana — Pedro</option>
           <option value="Floricultura Império">Floricultura Império — Jaqueline</option>
           <option value="Eterno Sabor">Eterno Sabor — Amanda (Gastronomia)</option>
-          <option value="Dr. Vitor">Dr. Vitor D'Angelis (Medicina)</option>
+          <option value="Dr. Vitor">Dr. Vitor D'Ângeles (Medicina)</option>
           <option value="Prefeitura Lassance">Prefeitura Lassance — Carol</option>
           <option value="Ativar HSE">Ativar HSE — Rosi (Consultoria)</option>
         </select>
@@ -10303,7 +10413,7 @@ function exportarOnboarding() {
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:var(--bg3);border-radius:10px;border:1px solid var(--border)">
           <div id="mc-av-wrap" style="width:72px;height:72px;border-radius:14px;background:linear-gradient(135deg,#06b6d4,#0284c7);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;cursor:pointer;position:relative;overflow:hidden;flex-shrink:0" onclick="document.getElementById('mc-foto-input').click()" title="Clique para adicionar foto">
             <span id="mc-av-initials">?</span>
-            <img id="mc-av-img" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+            <img id="mc-av-img" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">
           </div>
           <div>
             <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px">Foto do Cliente</div>
@@ -11271,24 +11381,41 @@ async function enviarNovoProjetoIA() {
   document.getElementById('npia-form-body').style.display = 'none';
   document.getElementById('npia-enviar-btn').style.display = 'none';
   document.getElementById('npia-loading').style.display = 'block';
+  // Tenta primeiro via Luna (n8n), com fallback para Anthropic direto
+  var resultado = null;
   try {
     var r = await fetch(_LUNA_CEO_BRIEFING, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({cliente: cliente, brief: brief, plano: tipo})
     });
-    var d = await r.json();
-    document.getElementById('npia-loading').style.display = 'none';
-    if (d.ok || d.tarefas) {
-      _npiaMostrarResultado(d, cliente, tipo);
-    } else {
-      toast('Erro na análise: ' + (d.message || JSON.stringify(d)), 't-red');
-      document.getElementById('npia-form-body').style.display = 'block';
-      document.getElementById('npia-enviar-btn').style.display = 'flex';
+    if (r.ok) {
+      var d = await r.json();
+      if (d.ok || d.tarefas) { resultado = d; }
     }
-  } catch(e) {
-    document.getElementById('npia-loading').style.display = 'none';
-    toast('Erro de conexão com a IA. Tente novamente.', 't-red');
+  } catch(e) { /* fallback abaixo */ }
+  // Fallback: gera via Anthropic API direto no browser
+  if (!resultado) {
+    try {
+      var prompt = `Você é o sistema de gestão da agência Digital Coffee. Gere um plano de projeto detalhado para o cliente "${cliente}".\n\nBrief: ${brief}\nTipo de projeto: ${tipo}\n\nResponda APENAS com JSON válido no seguinte formato (sem markdown, sem explicações):\n{"ok":true,"plano":"Resumo estratégico em 2 frases","tarefas":[{"agente":"Nome do Agente","tarefa":"Descrição da tarefa","pilar":"Criação|Aquisição|Conteúdo|Tecnologia|Comercial","dia":"D+1 até D+30","cor":"#hex"}]}\n\nCrie entre 6 e 10 tarefas realistas distribuídas entre os agentes: Luna, Mila, Kaka, Noah, Cauã, Levy, Rafael, Benjamim, Ana. Foque no tipo de projeto solicitado.`;
+      var ar = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1200, messages: [{ role: 'user', content: prompt }] })
+      });
+      if (ar.ok) {
+        var ad = await ar.json();
+        var txt = ad.content && ad.content[0] && ad.content[0].text ? ad.content[0].text : '';
+        var jsonTxt = txt.replace(/```json|```/g,'').trim();
+        resultado = JSON.parse(jsonTxt);
+      }
+    } catch(e2) { /* sem resultado */ }
+  }
+  document.getElementById('npia-loading').style.display = 'none';
+  if (resultado && (resultado.ok || resultado.tarefas)) {
+    _npiaMostrarResultado(resultado, cliente, tipo);
+  } else {
+    toast('Não foi possível gerar o projeto. Verifique sua conexão.', 't-red');
     document.getElementById('npia-form-body').style.display = 'block';
     document.getElementById('npia-enviar-btn').style.display = 'flex';
   }
@@ -11619,10 +11746,10 @@ function _abrirJanelaPDF(titulo, conteudoHTML, cliente, tipoLabel, dataStr) {
     + '@media print{.btn-imp{display:none!important}.dc-banner,.dc-gold{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'
     + '</style></head><body>'
     + '<div class="dc-banner">'
-    + '<div class="dc-left"><img class="dc-logo" src="' + logoSrc + '" onerror="this.style.display=\'none\'"></div>'
+    + '<div class="dc-left"><img class="dc-logo" src="' + logoSrc + '" onerror="this.style.display=\'none\'" loading="lazy"></div>'
     + '<div class="dc-div"></div>'
     + '<div class="dc-mid"><div class="dc-titulo">' + titulo + '</div><div class="dc-sub">' + tipoLabel + '</div></div>'
-    + '<div class="dc-right"><div class="dc-gold"></div><div class="dc-icon"><img src="' + iconSrc + '" onerror="this.style.display=\'none\'"></div></div>'
+    + '<div class="dc-right"><div class="dc-gold"></div><div class="dc-icon"><img src="' + iconSrc + '" onerror="this.style.display=\'none\'" loading="lazy"></div></div>'
     + '</div>'
     + '<div class="dc-meta"><div><strong>' + cliente + '</strong>' + tipoLabel + '</div><div style="text-align:right">' + dataStr + '<br>adigitalcoffee.com</div></div>'
     + conteudoHTML
@@ -11804,6 +11931,413 @@ function _remarcarEvento(cardId, tipo, cliente, data, hora, local) {
       timestamp: new Date().toISOString()
     })
   }).catch(function(){});
+}
+</script>
+
+
+<!-- ═══ MODAL SWARM SOCIAL MEDIA ═══ -->
+<div id="modal-swarm-sm" class="modal-overlay" style="display:none" onclick="if(event.target===this)fecharSwarmSM()">
+  <div class="modal-box" style="max-width:860px;max-height:94vh;overflow-y:auto">
+    <div class="modal-head">
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:url(#swarm-grad)">
+          <defs><linearGradient id="swarm-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#3b82f6"/></linearGradient></defs>
+          <path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>
+        </svg>
+        <span style="background:linear-gradient(135deg,#a855f7,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Swarm de Agentes — Social Media Completo</span>
+      </div>
+      <button class="modal-close" onclick="fecharSwarmSM()">×</button>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div id="swarm-form" class="modal-body">
+      <div style="background:linear-gradient(135deg,rgba(168,85,247,.1),rgba(59,130,246,.08));border:1px solid rgba(168,85,247,.25);border-radius:12px;padding:16px 20px;margin-bottom:20px">
+        <div style="font-size:13px;font-weight:700;color:#a855f7;margin-bottom:6px">⚡ Como funciona</div>
+        <div style="font-size:12px;color:var(--gray);line-height:1.7">Todos os agentes são disparados <strong style="color:var(--white)">em paralelo</strong> — cada um cuida de uma frente diferente do Social Media. No final, o Benício consolida tudo numa estratégia única.</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Cliente *</label>
+          <select class="form-select" id="swarm-cliente">
+            <option value="">Selecionar cliente...</option>
+            <option>Fisio Vida</option><option>Financonte</option><option>Disque Pet</option>
+            <option>Dr. Vitor D'Ângeles</option><option>Eterno Sabor</option><option>Conque Blocos</option>
+            <option>Cartão São Sebastião</option><option>Odonto São Sebastião</option>
+            <option>Floricultura Império</option><option>Dás Gerais</option><option>Rose Beatriz</option>
+            <option>Ativar HSE</option><option>Reforma Tributária</option><option>Prefeitura Lassance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Segmento / Nicho *</label>
+          <select class="form-select" id="swarm-nicho">
+            <option value="">Selecionar nicho...</option>
+            <option value="saude">Saúde / Fisioterapia / Clínica</option>
+            <option value="alimentacao">Alimentação / Restaurante / Delivery</option>
+            <option value="pet">Pet / Veterinária / Pet Shop</option>
+            <option value="construcao">Construção / Reforma / Materiais</option>
+            <option value="financeiro">Financeiro / Contabilidade / Jurídico</option>
+            <option value="estetica">Estética / Beleza / Salão</option>
+            <option value="moda">Moda / Vestuário / Loja</option>
+            <option value="educacao">Educação / Cursos / Coaching</option>
+            <option value="imoveis">Imóveis / Construtora</option>
+            <option value="outro">Outro / Geral</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label class="form-label">Objetivo principal do cliente (opcional)</label>
+          <textarea class="form-textarea" id="swarm-objetivo" rows="2" placeholder="Ex: aumentar agendamentos pelo WhatsApp, vender mais no delivery, captar leads para consultoria..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label class="form-label">Contexto adicional (opcional)</label>
+          <textarea class="form-textarea" id="swarm-contexto" rows="2" placeholder="Ex: cliente novo, reclamando de baixo engajamento, concorrente forte na cidade, já tem 500 seguidores, budget de R$300 para tráfego..."></textarea>
+        </div>
+      </div>
+
+      <!-- AGENTES PARTICIPANTES -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Agentes participantes do swarm</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px" id="swarm-agents-preview">
+          <div style="background:var(--bg3);border:1px solid rgba(245,181,68,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px">BENÍCIO</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Estratégia geral + consolidação</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#a855f7;letter-spacing:.5px">FLÁVIA</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Calendário editorial completo</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(249,115,22,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#f97316;letter-spacing:.5px">MILA</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Copies e legendas prontas</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(249,115,22,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#f97316;letter-spacing:.5px">CAUÃ</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Briefing visual e artes</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#3b82f6;letter-spacing:.5px">KAKA</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Tráfego pago e Meta Ads</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#3b82f6;letter-spacing:.5px">NOAH</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">SEO e presença orgânica</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#a855f7;letter-spacing:.5px">KATIA</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Engajamento e comunidade</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(245,181,68,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px">MIKAEL</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">KPIs e métricas de resultado</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;font-weight:800;color:#ef4444;letter-spacing:.5px">LUNA</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">Atendimento e CRM WhatsApp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-foot" id="swarm-form-foot">
+      <button class="btn btn-ghost" onclick="fecharSwarmSM()">Cancelar</button>
+      <button class="btn" onclick="dispararSwarmSM()" style="background:linear-gradient(135deg,#a855f7,#3b82f6);color:#fff;border:none;display:flex;align-items:center;gap:7px">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#fff"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+        Disparar Swarm (9 agentes em paralelo)
+      </button>
+    </div>
+
+    <!-- LOADING / PROGRESSO -->
+    <div id="swarm-loading" style="display:none;padding:24px 28px">
+      <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:20px;display:flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#a855f7;animation:pulse 1s infinite"></span>
+        Swarm em execução — agentes rodando em paralelo...
+      </div>
+      <div id="swarm-progress-list" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+
+    <!-- RESULTADO CONSOLIDADO -->
+    <div id="swarm-resultado" style="display:none;padding:0 28px 28px">
+      <div style="background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(59,130,246,.08));border:1px solid rgba(168,85,247,.3);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-size:13px;font-weight:800;color:#a855f7;margin-bottom:3px">✓ Swarm concluído — 9 agentes · estratégia gerada</div>
+          <div style="font-size:11px;color:var(--gray)" id="swarm-res-meta"></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost btn-sm" onclick="copiarSwarmResultado()">📋 Copiar tudo</button>
+          <button class="btn btn-ghost btn-sm" onclick="enviarSwarmWpp()">📲 WhatsApp</button>
+        </div>
+      </div>
+      <div id="swarm-res-conteudo" style="display:flex;flex-direction:column;gap:16px"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// SWARM SOCIAL MEDIA — Motor paralelo de agentes
+// ══════════════════════════════════════════════
+var _swarmCliente = '';
+var _swarmNicho = '';
+var _swarmResultados = {};
+
+function abrirSwarmSocialMedia() {
+  document.getElementById('swarm-form').style.display = 'block';
+  document.getElementById('swarm-form-foot').style.display = 'flex';
+  document.getElementById('swarm-loading').style.display = 'none';
+  document.getElementById('swarm-resultado').style.display = 'none';
+  document.getElementById('modal-swarm-sm').style.display = 'flex';
+}
+function fecharSwarmSM() {
+  document.getElementById('modal-swarm-sm').style.display = 'none';
+}
+
+// ── Helpers de API ──
+function _getKey(nome) {
+  try { return localStorage.getItem('dc_int_' + nome) || ''; } catch(e) { return ''; }
+}
+
+async function _callClaude(systemPrompt, userPrompt) {
+  const key = _getKey('Anthropic');
+  const headers = { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' };
+  if (key) headers['x-api-key'] = key;
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST', headers,
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1200, system: systemPrompt, messages: [{ role: 'user', content: userPrompt }] })
+  });
+  const d = await r.json();
+  return d.content && d.content[0] ? d.content[0].text : '';
+}
+
+async function _callGemini(prompt) {
+  const key = _getKey('Gemini');
+  if (!key) return _callClaude('Você é um especialista em marketing digital.', prompt);
+  const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + key, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+  });
+  const d = await r.json();
+  return d.candidates && d.candidates[0] ? d.candidates[0].content.parts[0].text : '';
+}
+
+async function _callGPT(systemPrompt, userPrompt) {
+  const key = _getKey('OpenAI');
+  if (!key) return _callClaude(systemPrompt, userPrompt);
+  const r = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+    body: JSON.stringify({ model: 'gpt-4o-mini', max_tokens: 1200, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }] })
+  });
+  const d = await r.json();
+  return d.choices && d.choices[0] ? d.choices[0].message.content : '';
+}
+
+// ── Atualizar card de progresso de cada agente ──
+function _swarmUpdateProgress(agente, status, resultado) {
+  var card = document.getElementById('swarm-prog-' + agente);
+  if (!card) return;
+  var dot = card.querySelector('.swarm-dot');
+  var txt = card.querySelector('.swarm-txt');
+  var res = card.querySelector('.swarm-res');
+  if (status === 'loading') {
+    dot.style.background = '#f5b544'; dot.style.animation = 'pulse 0.8s infinite';
+    txt.textContent = 'Processando...';
+  } else if (status === 'done') {
+    dot.style.background = '#22c55e'; dot.style.animation = 'none';
+    txt.textContent = 'Concluído ✓';
+    if (res && resultado) { res.textContent = resultado.substring(0,80) + '...'; res.style.display = 'block'; }
+  } else if (status === 'error') {
+    dot.style.background = '#ef4444'; dot.style.animation = 'none';
+    txt.textContent = 'Usando fallback...';
+  }
+}
+
+// ── Definição dos 9 agentes do swarm ──
+function _buildSwarmAgents(cliente, nicho, objetivo, contexto) {
+  var base = 'Você é um agente especializado da agência Digital Coffee (Pirapora MG). Cliente: ' + cliente + '. Nicho: ' + nicho + '. Objetivo: ' + (objetivo || 'crescimento digital geral') + '. Contexto: ' + (contexto || 'sem contexto adicional') + '. Seja direto, prático e específico. Responda em português. Use bullet points e emojis para facilitar leitura.';
+
+  return [
+    {
+      id: 'benicio', nome: 'Benício', cor: '#b8720a', emoji: '🧠',
+      frente: 'Diagnóstico Estratégico',
+      api: 'claude',
+      system: base + ' Você é o Benício, estrategista independente.',
+      prompt: 'Faça um diagnóstico estratégico completo para Social Media do cliente ' + cliente + ' no nicho ' + nicho + '. Inclua: análise de oportunidades e riscos, posicionamento recomendado, proposta de valor única, principais alavancas de crescimento. Seja específico para o nicho. Máximo 400 palavras.'
+    },
+    {
+      id: 'flavia', nome: 'Flávia', cor: '#a855f7', emoji: '📅',
+      frente: 'Calendário Editorial Mensal',
+      api: 'claude',
+      system: base + ' Você é a Flávia, especialista em planejamento editorial.',
+      prompt: 'Crie um calendário editorial completo de 1 mês para ' + cliente + ' (nicho: ' + nicho + '). Divida por semanas (4 semanas). Para cada semana: 4-5 posts com tema, formato (reel/carrossel/post/story), dia ideal de publicação e horário. Total: 16-20 posts. Seja específico para o nicho ' + nicho + '.'
+    },
+    {
+      id: 'mila', nome: 'Mila', cor: '#f97316', emoji: '✍️',
+      frente: 'Copies e Legendas Prontas',
+      api: 'claude',
+      system: base + ' Você é a Mila, copywriter usando Claude. Escreva copies reais prontos para usar.',
+      prompt: 'Escreva 4 legendas COMPLETAS e prontas para publicar para ' + cliente + ' (nicho: ' + nicho + '). Cada legenda deve ter: gancho forte na primeira linha, desenvolvimento, CTA direto e 5-8 hashtags relevantes. Varie os formatos: 1 educativo, 1 emocional/história, 1 promocional, 1 engajamento (pergunta). Legendas reais, prontas para copiar e publicar.'
+    },
+    {
+      id: 'caua', nome: 'Cauã', cor: '#f97316', emoji: '🎨',
+      frente: 'Briefing Visual e Artes',
+      api: 'gpt',
+      system: base + ' Você é o Cauã, diretor de design usando GPT-4. Crie briefings visuais detalhados.',
+      prompt: 'Crie um briefing visual completo para as artes de Social Media de ' + cliente + ' (nicho: ' + nicho + '). Inclua: 1) Paleta de cores recomendada (4 cores com hex), 2) Tipografia recomendada (fonte principal + secundária), 3) Estilo visual (3-5 adjetivos), 4) Elementos proibidos, 5) Briefing específico para 4 tipos de post (feed, carrossel, reel thumbnail, stories), 6) Referências visuais (descreva o estilo de 2-3 perfis de referência). Seja específico para o nicho ' + nicho + '.'
+    },
+    {
+      id: 'kaka', nome: 'Kaka', cor: '#3b82f6', emoji: '📈',
+      frente: 'Estratégia de Tráfego Pago',
+      api: 'claude',
+      system: base + ' Você é o Kaka, especialista em Meta Ads e Google Ads.',
+      prompt: 'Crie uma estratégia completa de tráfego pago para ' + cliente + ' (nicho: ' + nicho + '). Inclua: 1) Budget mensal recomendado e distribuição, 2) Público-alvo detalhado (interesses, idade, localização, comportamentos), 3) Estrutura de campanha (campanhas, conjuntos, anúncios), 4) Formatos de anúncio recomendados, 5) Copy de 2 anúncios prontos (headline + texto + CTA), 6) KPIs e metas esperadas. Específico para Meta Ads no nicho ' + nicho + '.'
+    },
+    {
+      id: 'noah', nome: 'Noah', cor: '#3b82f6', emoji: '🔍',
+      frente: 'SEO e Presença Orgânica',
+      api: 'gemini',
+      system: base + ' Você é o Noah, especialista em SEO.',
+      prompt: 'Crie um plano de SEO e presença orgânica para ' + cliente + ' no nicho ' + nicho + ' em Pirapora MG (ou região). Inclua: 1) 10 palavras-chave estratégicas (com volume estimado e dificuldade), 2) Checklist de otimização do Google Meu Negócio (8-10 pontos), 3) Estratégia de conteúdo para ranquear organicamente (3 artigos ou pautas para blog/perfil), 4) Estratégia de backlinks locais, 5) Métricas para acompanhar. Seja prático e específico para negócio local.'
+    },
+    {
+      id: 'katia', nome: 'Katia', cor: '#a855f7', emoji: '💬',
+      frente: 'Engajamento e Comunidade',
+      api: 'claude',
+      system: base + ' Você é a Katia, Community Manager especialista em engajamento.',
+      prompt: 'Crie uma estratégia de engajamento e comunidade para ' + cliente + ' (nicho: ' + nicho + '). Inclua: 1) Rotina diária de engajamento (o que fazer em 20 min por dia), 2) Scripts de resposta para comentários (positivos, negativos, dúvidas), 3) 5 ideias de interação para stories (enquetes, perguntas, quizzes), 4) Estratégia de parcerias e colabs locais, 5) Como transformar seguidores em clientes via DM (funil de conversão no Instagram). Seja muito prático.'
+    },
+    {
+      id: 'mikael', nome: 'Mikael', cor: '#b8720a', emoji: '📊',
+      frente: 'KPIs e Relatório de Métricas',
+      api: 'gpt',
+      system: base + ' Você é o Mikael, especialista em performance e métricas.',
+      prompt: 'Defina o sistema completo de KPIs e métricas para ' + cliente + ' (nicho: ' + nicho + '). Inclua: 1) Tabela com 8-10 KPIs essenciais (nome, o que mede, meta mensal, como medir), 2) Dashboard semanal (o que analisar em 15 min toda segunda-feira), 3) Sinais de alerta (quando uma métrica indica problema), 4) Template de relatório mensal para enviar ao cliente (estrutura e perguntas certas), 5) Benchmarks do nicho ' + nicho + ' (taxas de engajamento, alcance esperado). Formato de tabela quando possível.'
+    },
+    {
+      id: 'luna', nome: 'Luna', cor: '#ef4444', emoji: '🤖',
+      frente: 'Atendimento e Automação WhatsApp',
+      api: 'claude',
+      system: base + ' Você é a Luna, responsável por automação de WhatsApp e atendimento.',
+      prompt: 'Crie um plano completo de atendimento e automação WhatsApp para ' + cliente + ' (nicho: ' + nicho + '). Inclua: 1) Fluxo de boas-vindas automatizado (3-5 mensagens em sequência), 2) Respostas automáticas para as 5 perguntas mais frequentes do nicho, 3) Funil de conversão via WhatsApp (da primeira mensagem ao agendamento/compra), 4) Horários de atendimento e gestão de expectativas, 5) Mensagem de cobrança educada para clientes inadimplentes, 6) Template de relatório para enviar ao cliente mensalmente via WhatsApp. Mensagens prontas para usar.'
+    }
+  ];
+}
+
+// ── DISPARAR O SWARM ──
+async function dispararSwarmSM() {
+  var cliente = document.getElementById('swarm-cliente').value;
+  var nicho = document.getElementById('swarm-nicho').value;
+  var objetivo = document.getElementById('swarm-objetivo').value.trim();
+  var contexto = document.getElementById('swarm-contexto').value.trim();
+  if (!cliente) { toast('Selecione o cliente', 't-red'); return; }
+  if (!nicho) { toast('Selecione o nicho', 't-red'); return; }
+  _swarmCliente = cliente; _swarmNicho = nicho; _swarmResultados = {};
+  var agentes = _buildSwarmAgents(cliente, nicho, objetivo, contexto);
+
+  // Esconder form, mostrar loading
+  document.getElementById('swarm-form').style.display = 'none';
+  document.getElementById('swarm-form-foot').style.display = 'none';
+  document.getElementById('swarm-resultado').style.display = 'none';
+  document.getElementById('swarm-loading').style.display = 'block';
+
+  // Criar cards de progresso
+  var progList = document.getElementById('swarm-progress-list');
+  progList.innerHTML = agentes.map(function(a) {
+    return '<div id="swarm-prog-' + a.id + '" style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--bg3);border-radius:10px;border:1px solid var(--border)">'
+      + '<div class="swarm-dot" style="width:9px;height:9px;border-radius:50%;background:var(--gray2);flex-shrink:0;margin-top:3px;transition:.3s"></div>'
+      + '<div style="flex:1">'
+      + '<div style="font-size:12px;font-weight:700;color:' + a.cor + '">' + a.emoji + ' ' + a.nome + ' <span style="color:var(--gray);font-weight:400">— ' + a.frente + '</span></div>'
+      + '<div class="swarm-txt" style="font-size:11px;color:var(--gray2);margin-top:2px">Aguardando...</div>'
+      + '<div class="swarm-res" style="display:none;font-size:11px;color:var(--gray);margin-top:4px;font-style:italic"></div>'
+      + '</div></div>';
+  }).join('');
+
+  // Disparar TODOS em paralelo com Promise.all
+  var promises = agentes.map(async function(agente) {
+    _swarmUpdateProgress(agente.id, 'loading');
+    try {
+      var resultado;
+      if (agente.api === 'gemini') {
+        resultado = await _callGemini(agente.prompt);
+      } else if (agente.api === 'gpt') {
+        resultado = await _callGPT(agente.system, agente.prompt);
+      } else {
+        resultado = await _callClaude(agente.system, agente.prompt);
+      }
+      _swarmResultados[agente.id] = { nome: agente.nome, frente: agente.frente, cor: agente.cor, emoji: agente.emoji, texto: resultado };
+      _swarmUpdateProgress(agente.id, 'done', resultado);
+      return resultado;
+    } catch(e) {
+      // Fallback: tenta Claude para qualquer API que falhou
+      try {
+        var fb = await _callClaude(agente.system, agente.prompt);
+        _swarmResultados[agente.id] = { nome: agente.nome, frente: agente.frente, cor: agente.cor, emoji: agente.emoji, texto: fb };
+        _swarmUpdateProgress(agente.id, 'done', fb);
+        return fb;
+      } catch(e2) {
+        _swarmResultados[agente.id] = { nome: agente.nome, frente: agente.frente, cor: agente.cor, emoji: agente.emoji, texto: 'Erro ao processar. Verifique a API key.' };
+        _swarmUpdateProgress(agente.id, 'error');
+        return '';
+      }
+    }
+  });
+
+  await Promise.all(promises);
+  _mostrarResultadoSwarm(cliente, nicho);
+}
+
+// ── MOSTRAR RESULTADO CONSOLIDADO ──
+function _mostrarResultadoSwarm(cliente, nicho) {
+  document.getElementById('swarm-loading').style.display = 'none';
+  document.getElementById('swarm-resultado').style.display = 'block';
+  document.getElementById('swarm-res-meta').textContent = cliente + ' · ' + nicho + ' · ' + new Date().toLocaleDateString('pt-BR') + ' · 9 agentes concluídos';
+
+  var ordem = ['benicio','flavia','mila','caua','kaka','noah','katia','mikael','luna'];
+  var html = ordem.map(function(id) {
+    var r = _swarmResultados[id];
+    if (!r) return '';
+    var textoHtml = r.texto
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^#{1,3}\s(.+)$/gm, '<div style="font-size:13px;font-weight:700;color:var(--white);margin:10px 0 4px">$1</div>')
+      .replace(/^[-•]\s(.+)$/gm, '<div style="display:flex;align-items:flex-start;gap:6px;margin:3px 0;font-size:12px;color:var(--text)"><span style="color:' + r.cor + ';flex-shrink:0">•</span><span>$1</span></div>')
+      .replace(/\n/g, '<br>')
+      .replace(/
+/g, '<br>');
+    return '<div style="background:var(--bg2);border:1px solid var(--border);border-left:3px solid ' + r.cor + ';border-radius:12px;overflow:hidden">'
+      + '<div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3)">'
+      + '<div style="width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,.3);border:1px solid ' + r.cor + ';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">' + r.emoji + '</div>'
+      + '<div><div style="font-size:13px;font-weight:700;color:' + r.cor + '">' + r.nome + '</div><div style="font-size:11px;color:var(--gray)">' + r.frente + '</div></div>'
+      + '</div>'
+      + '<div style="padding:16px 18px;font-size:12px;line-height:1.8;color:var(--gray)">' + textoHtml + '</div>'
+      + '</div>';
+  }).join('');
+  document.getElementById('swarm-res-conteudo').innerHTML = html;
+}
+
+function copiarSwarmResultado() {
+  var texto = '=== ESTRATÉGIA SOCIAL MEDIA — ' + _swarmCliente.toUpperCase() + ' ===\n\n';
+  var ordem = ['benicio','flavia','mila','caua','kaka','noah','katia','mikael','luna'];
+  ordem.forEach(function(id) {
+    var r = _swarmResultados[id];
+    if (!r) return;
+    texto += '── ' + r.emoji + ' ' + r.nome.toUpperCase() + ' — ' + r.frente + ' ──\n';
+    texto += r.texto + '\n\n';
+  });
+  navigator.clipboard.writeText(texto).then(function(){ toast('Estratégia completa copiada!', 't-green'); }).catch(function(){ toast('Não foi possível copiar.', 't-red'); });
+}
+
+function enviarSwarmWpp() {
+  var resumo = '✅ *Estratégia Social Media — ' + _swarmCliente + '*\n\n';
+  resumo += '9 agentes trabalharam em paralelo. Acesse o Hub para ver a estratégia completa.\n\n';
+  resumo += '📅 Gerado em: ' + new Date().toLocaleDateString('pt-BR');
+  var url = 'https://wa.me/?text=' + encodeURIComponent(resumo);
+  window.open(url, '_blank');
 }
 </script>
 
