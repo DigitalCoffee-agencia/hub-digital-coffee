@@ -8924,9 +8924,12 @@ const nicheData = {
 
 // ── CHAT AGENTE ──
 let _agChatNome = null;
+let _agChatHistory = {};
+
 function abrirChatAgente(nome, cor) {
   _agChatNome = nome;
-  const data = agentesData[nome] || {cor:'#555',cargo:'Agente',status:'on',greeting:'Olá! Como posso te ajudar?',respostas:['Entendido! Processando sua solicitação.']};
+  if(!_agChatHistory[nome]) _agChatHistory[nome] = [];
+  const data = agentesData[nome] || {cor:'#555',cargo:'Agente',status:'on',greeting:'Olá! Como posso te ajudar?'};
   document.getElementById('ag-chat-nome').textContent = nome;
   document.getElementById('ag-chat-cargo').textContent = data.cargo;
   const av = document.getElementById('ag-chat-av');
@@ -8968,34 +8971,23 @@ async function sendAgChat() {
   typing.innerHTML = '<span class="ag-typing-dot"></span><span class="ag-typing-dot"></span><span class="ag-typing-dot"></span>';
   msgs.appendChild(typing);
   msgs.scrollTop = msgs.scrollHeight;
-  const data = agentesData[_agChatNome] || {};
-  // Construir system prompt baseado no agente
-  const systemPrompt = `Você é ${_agChatNome}, um agente especializado da agência Digital Coffee, uma agência de marketing digital em Pirapora MG. Seu cargo: ${data.cargo||'Especialista'}. Responda de forma prática, direta e focada no contexto da agência. A agência tem 14 clientes ativos, usa WhatsApp Business integrado com n8n, e os agentes são: Luna (atendimento), Mila (copy), Kaka (tráfego), Noah (SEO), Cauã (design), Benjamim (dev), entre outros. Mantenha um tom profissional mas próximo, como um colega de equipe.`;
+  const historico = (_agChatHistory[_agChatNome] || []).slice(-10);
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://luna.adigitalcoffee.com/webhook/hub-agent-claude', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 600,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: text }]
-      })
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({agente: _agChatNome, mensagem: text, historico})
     });
+    const d = await r.json();
     typing.remove();
-    if(response.ok) {
-      const d = await response.json();
-      const reply = d.content && d.content[0] && d.content[0].text ? d.content[0].text : 'Não consegui processar. Tente novamente.';
-      appendAgMsg(reply, msgs);
-    } else {
-      // Fallback para respostas locais se API falhar
-      const respostas = data.respostas || ['Entendido! Vou processar isso.'];
-      appendAgMsg(respostas[Math.floor(Math.random()*respostas.length)], msgs);
-    }
+    const reply = d.resposta || 'Não consegui processar. Tente novamente.';
+    if(!_agChatHistory[_agChatNome]) _agChatHistory[_agChatNome] = [];
+    _agChatHistory[_agChatNome].push({role:'user', content:text});
+    _agChatHistory[_agChatNome].push({role:'assistant', content:reply});
+    appendAgMsg(reply, msgs);
   } catch(e) {
     typing.remove();
-    const respostas = data.respostas || ['Entendido!'];
-    appendAgMsg(respostas[Math.floor(Math.random()*respostas.length)], msgs);
+    appendAgMsg('Erro de conexão. Tente novamente.', msgs);
   }
   input.disabled = false;
   input.focus();
