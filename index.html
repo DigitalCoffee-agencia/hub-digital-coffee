@@ -11992,47 +11992,81 @@ function _remarcarEvento(cardId, tipo, cliente, data, hora, local) {
         </div>
       </div>
 
-      <!-- AGENTES PARTICIPANTES -->
+      <!-- AGENTES PARTICIPANTES — SELECIONÁVEIS -->
       <div style="margin-bottom:20px">
-        <div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Agentes participantes do swarm</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px" id="swarm-agents-preview">
-          <div style="background:var(--bg3);border:1px solid rgba(245,181,68,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px">BENÍCIO</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Estratégia geral + consolidação</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#a855f7;letter-spacing:.5px">FLÁVIA</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Calendário editorial completo</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(249,115,22,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#f97316;letter-spacing:.5px">MILA</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Copies e legendas prontas</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(249,115,22,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#f97316;letter-spacing:.5px">CAUÃ</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Briefing visual e artes</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#3b82f6;letter-spacing:.5px">KAKA</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Tráfego pago e Meta Ads</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#3b82f6;letter-spacing:.5px">NOAH</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">SEO e presença orgânica</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#a855f7;letter-spacing:.5px">KATIA</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Engajamento e comunidade</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(245,181,68,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px">MIKAEL</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">KPIs e métricas de resultado</div>
-          </div>
-          <div style="background:var(--bg3);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:10px 12px">
-            <div style="font-size:10px;font-weight:800;color:#ef4444;letter-spacing:.5px">LUNA</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">Atendimento e CRM WhatsApp</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px">Selecione os agentes</div>
+          <div style="display:flex;gap:8px">
+            <button onclick="_swarmSelecionarTodos(true)" style="font-size:10px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--gray);cursor:pointer;font-family:inherit">Todos</button>
+            <button onclick="_swarmSelecionarTodos(false)" style="font-size:10px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--gray);cursor:pointer;font-family:inherit">Nenhum</button>
           </div>
         </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px" id="swarm-agents-preview">
+          <label id="swarm-sel-benicio" onclick="_swarmToggleAgente('benicio',this)" style="background:var(--bg3);border:2px solid #7c3aed;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#7c3aed;letter-spacing:.5px">BENÍCIO</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#7c3aed;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Diagnóstico Estratégico</div>
+          </label>
+          <label id="swarm-sel-flavia" onclick="_swarmToggleAgente('flavia',this)" style="background:var(--bg3);border:2px solid #2563eb;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#2563eb;letter-spacing:.5px">FLÁVIA</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#2563eb;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Calendário Editorial</div>
+          </label>
+          <label id="swarm-sel-mila" onclick="_swarmToggleAgente('mila',this)" style="background:var(--bg3);border:2px solid #ea580c;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#ea580c;letter-spacing:.5px">MILA</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#ea580c;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Copies e Legendas</div>
+          </label>
+          <label id="swarm-sel-rafa" onclick="_swarmToggleAgente('rafa',this)" style="background:var(--bg3);border:2px solid #0891b2;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#0891b2;letter-spacing:.5px">RAFA</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#0891b2;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Roteiros para Reels</div>
+          </label>
+          <label id="swarm-sel-caua" onclick="_swarmToggleAgente('caua',this)" style="background:var(--bg3);border:2px solid #db2777;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#db2777;letter-spacing:.5px">CAUÃ</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#db2777;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Briefing Visual</div>
+          </label>
+          <label id="swarm-sel-kaka" onclick="_swarmToggleAgente('kaka',this)" style="background:var(--bg3);border:2px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;opacity:.45;user-select:none" data-off="1">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#16a34a;letter-spacing:.5px">KAKA</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center"></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Tráfego Pago</div>
+          </label>
+          <label id="swarm-sel-noah" onclick="_swarmToggleAgente('noah',this)" style="background:var(--bg3);border:2px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;opacity:.45;user-select:none" data-off="1">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#0891b2;letter-spacing:.5px">NOAH</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center"></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">SEO</div>
+          </label>
+          <label id="swarm-sel-katia" onclick="_swarmToggleAgente('katia',this)" style="background:var(--bg3);border:2px solid #d97706;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#d97706;letter-spacing:.5px">KATIA</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#d97706;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">Engajamento</div>
+          </label>
+          <label id="swarm-sel-mikael" onclick="_swarmToggleAgente('mikael',this)" style="background:var(--bg3);border:2px solid #dc2626;border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s;user-select:none">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <div style="font-size:10px;font-weight:800;color:#dc2626;letter-spacing:.5px">MIKAEL</div>
+              <div class="swarm-check" style="width:14px;height:14px;border-radius:4px;background:#dc2626;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray)">KPIs e Métricas</div>
+          </label>
+        </div>
+        <div style="font-size:11px;color:var(--gray);margin-top:8px" id="swarm-sel-count">7 agentes selecionados</div>
       </div>
     </div>
 
@@ -12040,7 +12074,7 @@ function _remarcarEvento(cardId, tipo, cliente, data, hora, local) {
       <button class="btn btn-ghost" onclick="fecharSwarmSM()">Cancelar</button>
       <button class="btn" onclick="dispararSwarmSM()" style="background:linear-gradient(135deg,#a855f7,#3b82f6);color:#fff;border:none;display:flex;align-items:center;gap:7px">
         <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#fff"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
-        Disparar Swarm (9 agentes em paralelo)
+        Disparar Swarm (<span id="swarm-btn-count">7</span> agentes)
       </button>
     </div>
 
@@ -12078,6 +12112,70 @@ function _remarcarEvento(cardId, tipo, cliente, data, hora, local) {
 var _swarmCliente = '';
 var _swarmNicho = '';
 var _swarmResultados = {};
+
+var _SWARM_CORES = {
+  benicio:'#7c3aed',flavia:'#2563eb',mila:'#ea580c',rafa:'#0891b2',
+  caua:'#db2777',kaka:'#16a34a',noah:'#0891b2',katia:'#d97706',mikael:'#dc2626'
+};
+
+function _swarmToggleAgente(id, el) {
+  var off = el.dataset.off === '1';
+  var cor = _SWARM_CORES[id] || '#888';
+  if (off) {
+    el.dataset.off = '';
+    el.style.opacity = '1';
+    el.style.borderColor = cor;
+    var chk = el.querySelector('.swarm-check');
+    if (chk) { chk.style.background = cor; chk.innerHTML = '<svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'; }
+  } else {
+    el.dataset.off = '1';
+    el.style.opacity = '.45';
+    el.style.borderColor = 'var(--border)';
+    var chk = el.querySelector('.swarm-check');
+    if (chk) { chk.style.background = 'var(--border)'; chk.innerHTML = ''; }
+  }
+  _swarmAtualizarContagem();
+}
+
+function _swarmSelecionarTodos(sel) {
+  ['benicio','flavia','mila','rafa','caua','kaka','noah','katia','mikael'].forEach(function(id) {
+    var el = document.getElementById('swarm-sel-' + id);
+    if (!el) return;
+    var cor = _SWARM_CORES[id] || '#888';
+    if (sel) {
+      el.dataset.off = '';
+      el.style.opacity = '1';
+      el.style.borderColor = cor;
+      var chk = el.querySelector('.swarm-check');
+      if (chk) { chk.style.background = cor; chk.innerHTML = '<svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'; }
+    } else {
+      el.dataset.off = '1';
+      el.style.opacity = '.45';
+      el.style.borderColor = 'var(--border)';
+      var chk = el.querySelector('.swarm-check');
+      if (chk) { chk.style.background = 'var(--border)'; chk.innerHTML = ''; }
+    }
+  });
+  _swarmAtualizarContagem();
+}
+
+function _swarmAtualizarContagem() {
+  var total = ['benicio','flavia','mila','rafa','caua','kaka','noah','katia','mikael'].filter(function(id) {
+    var el = document.getElementById('swarm-sel-' + id);
+    return el && el.dataset.off !== '1';
+  }).length;
+  var countEl = document.getElementById('swarm-sel-count');
+  if (countEl) countEl.textContent = total + ' agente' + (total !== 1 ? 's' : '') + ' selecionado' + (total !== 1 ? 's' : '');
+  var btnEl = document.getElementById('swarm-btn-count');
+  if (btnEl) btnEl.textContent = total;
+}
+
+function _swarmGetSelecionados() {
+  return ['benicio','flavia','mila','rafa','caua','kaka','noah','katia','mikael'].filter(function(id) {
+    var el = document.getElementById('swarm-sel-' + id);
+    return el && el.dataset.off !== '1';
+  });
+}
 
 function abrirSwarmSocialMedia() {
   document.getElementById('swarm-form').style.display = 'block';
@@ -12245,8 +12343,11 @@ async function dispararSwarmSM() {
   var contexto = document.getElementById('swarm-contexto').value.trim();
   if (!cliente) { toast('Selecione o cliente', 't-red'); return; }
   if (!nicho) { toast('Selecione o nicho', 't-red'); return; }
+  var selecionados = _swarmGetSelecionados();
+  if (!selecionados.length) { toast('Selecione pelo menos 1 agente', 't-red'); return; }
   _swarmCliente = cliente; _swarmNicho = nicho; _swarmResultados = {};
-  var agentes = _buildSwarmAgents(cliente, nicho, objetivo, contexto);
+  var todosAgentes = _buildSwarmAgents(cliente, nicho, objetivo, contexto);
+  var agentes = todosAgentes.filter(function(a) { return selecionados.includes(a.id); });
 
   // Esconder form, mostrar loading
   document.getElementById('swarm-form').style.display = 'none';
