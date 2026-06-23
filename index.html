@@ -9310,12 +9310,47 @@ function exportarOnboarding() {
   const body = document.getElementById('onb-result-body');
   if(!body || !body.innerHTML) { toast('Gere o onboarding antes de exportar','t-red'); return; }
   const titulo = document.getElementById('onb-result-title')?.textContent || 'Onboarding';
-  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>${titulo}</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;font-size:13px;color:#111;background:#fff;padding:32px 40px}h1{font-size:18px;margin-bottom:4px}.sub{font-size:11px;color:#888;margin-bottom:24px}.section{border-left:3px solid #F5B544;padding:12px 16px;background:#f9f9f9;border-radius:0 8px 8px 0;margin-bottom:14px}.sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#b8720a;margin-bottom:8px}.sec-body{font-size:12px;color:#444;line-height:1.75}strong{color:#111}.tag{display:inline-block;border:1px solid #ddd;border-radius:20px;padding:3px 10px;font-size:11px;margin:3px 3px 3px 0;background:#fafafa}@media print{body{padding:20px 28px;print-color-adjust:exact;-webkit-print-color-adjust:exact}}</style></head><body><h1>☕ Digital Coffee — ${titulo}</h1><div class="sub">Gerado em ${new Date().toLocaleDateString('pt-BR')} por todos os agentes da agência</div>${body.innerHTML.replace(/var\(--[\w-]+\)/g,'#111').replace(/class="onb-section[^"]*"/g,'class="section"').replace(/class="onb-section-title[^"]*"/g,'class="sec-title"').replace(/class="onb-section-body[^"]*"/g,'class="sec-body"').replace(/class="onb-tag[^"]*"/g,'class="tag"')}</body></html>`;
+
+  // Extrai texto limpo de cada secao
+  var secoes = '';
+  var cards = body.querySelectorAll('[style*="border-left"]');
+  if (cards.length === 0) cards = body.children;
+  Array.from(cards).forEach(function(card) {
+    var nomeEl = card.querySelector('[style*="font-weight:700"]') || card.querySelector('div div');
+    var nome = nomeEl ? nomeEl.textContent.trim() : '';
+    var textoEl = card.querySelector('[id^="onb-txt-res-"]') || card.querySelector('[style*="line-height"]');
+    var texto = textoEl ? textoEl.innerText || textoEl.textContent : '';
+    if (!texto || texto.length < 10) return;
+    // Pega a cor da borda para o acento
+    var estilo = card.getAttribute('style') || '';
+    var corMatch = estilo.match(/border-left:[^;]*?solid\s+(#[0-9a-fA-F]{3,6})/);
+    var cor = corMatch ? corMatch[1] : '#F5B544';
+    secoes += '<div style="border-left:4px solid '+cor+';padding:14px 18px;background:#f8f9fa;border-radius:0 8px 8px 0;margin-bottom:20px;page-break-inside:avoid">'
+      + (nome ? '<div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:'+cor+';margin-bottom:10px">'+nome+'</div>' : '')
+      + '<div style="font-size:12px;color:#333;line-height:1.9;white-space:pre-wrap">'+texto.trim()+'</div>'
+      + '</div>';
+  });
+
+  const html = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>'+titulo+'</title>'
+    + '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#111;background:#fff;padding:36px 44px}'
+    + 'h1{font-size:20px;font-weight:800;color:#111;margin-bottom:4px}'
+    + '.sub{font-size:11px;color:#888;margin-bottom:8px}'
+    + '.linha{height:2px;background:#F5B544;margin-bottom:28px;border-radius:2px}'
+    + 'strong{color:#111;font-weight:700}'
+    + '@media print{body{padding:24px 32px;print-color-adjust:exact;-webkit-print-color-adjust:exact}}'
+    + '</style></head><body>'
+    + '<h1>Digital Coffee — '+titulo+'</h1>'
+    + '<div class="sub">Gerado em '+new Date().toLocaleDateString('pt-BR')+' por IA da Digital Coffee</div>'
+    + '<div class="linha"></div>'
+    + secoes
+    + '</body></html>';
+
   const w = window.open('','_blank','width=960,height=700');
   if(!w) { toast('Permita pop-ups para exportar','t-red'); return; }
-  w.document.write(html); w.document.close();
-  w.addEventListener('load', () => { w.focus(); w.print(); });
-  toast('PDF do onboarding aberto!','t-gold',4000);
+  w.document.write(html);
+  w.document.close();
+  w.addEventListener('load', function(){ w.focus(); w.print(); });
+  toast('PDF aberto — salve como PDF no diálogo de impressão','t-gold',4000);
 }
 </script>
 
