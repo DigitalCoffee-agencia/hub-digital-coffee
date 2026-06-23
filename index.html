@@ -9103,80 +9103,208 @@ async function salvarOnboarding() {
     if (btn) { btn.disabled = false; btn.textContent = 'Salvar na Ficha'; }
   }
 }
-function gerarOnboarding() {
+var _onbResultados = {};
+var _onbChatHistorico = {};
+
+function _onbToggleNichoCustom(val) {
+  var el = document.getElementById('onb-nicho-custom');
+  if (!el) return;
+  el.style.display = val === 'outro' ? 'block' : 'none';
+  if (val === 'outro') el.focus();
+}
+
+async function gerarOnboarding() {
   const nome = document.getElementById('onb-nome').value.trim();
   _onbClienteAtual = nome;
-  const nicho = document.getElementById('onb-nicho').value;
+  const nichoSel = document.getElementById('onb-nicho').value;
+  const nichoCustom = document.getElementById('onb-nicho-custom') ? document.getElementById('onb-nicho-custom').value.trim() : '';
+  const nicho = nichoCustom || (nichoSel !== 'outro' ? nichoSel : '') || nichoSel;
   const redes = getRedesSelecionadas() || 'Instagram, WhatsApp';
   const cidade = document.getElementById('onb-cidade').value || 'Pirapora, MG';
   const objetivo = document.getElementById('onb-objetivo').value;
   const budget = document.getElementById('onb-budget').value;
   if(!nome || !nicho) { toast('Preencha o nome do cliente e o nicho','t-red'); return; }
+
   document.getElementById('onb-form-section').style.display = 'none';
   document.getElementById('onb-loading-section').style.display = 'block';
-  const nd = nicheData[nicho] || nicheData['outro'];
-  const agentesOnb = [
-    {nome:'José',msg:'Montando briefing completo e ficha de onboarding...'},
-    {nome:'Benício',msg:'Analisando mercado e concorrência local...'},
-    {nome:'Flávia',msg:'Criando cronograma mensal de conteúdo...'},
-    {nome:'Katia',msg:'Definindo estratégia de redes e horários de publicação...'},
-    {nome:'Kaka Santos',msg:'Analisando oportunidades de tráfego pago...'},
-    {nome:'Noah',msg:'Pesquisando tendências e perfis de inspiração...'},
-    {nome:'Rafa',msg:'Preparando estratégia de copy e formatos recomendados...'},
-    {nome:'Cauã',msg:'Definindo diretrizes visuais e referências criativas...'},
+  document.getElementById('onb-result-section').style.display = 'none';
+
+  const ctx = 'Cliente: ' + nome + ' | Nicho: ' + nicho + ' | Cidade: ' + cidade + ' | Redes: ' + redes + ' | Objetivo: ' + objetivo + ' | Budget trafego: ' + budget;
+  const base = 'Voce e um especialista da agencia Digital Coffee de Pirapora MG. Entregue conteudo profissional e especifico, sem emojis no corpo do texto, linguagem executiva.';
+
+  const agentes = [
+    {
+      id: 'camila', nome: 'Camila Santos', cor: '#b8720a',
+      grad: 'linear-gradient(145deg,#f5b544,#b8720a)',
+      iconPath: 'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z',
+      frente: 'Briefing Estratégico',
+      system: base + ' Voce e a Camila Santos, CEO da Digital Coffee.',
+      prompt: 'Crie um BRIEFING ESTRATEGICO completo para o cliente ' + nome + ' (nicho: ' + nicho + ', cidade: ' + cidade + ') no seguinte formato:\n\nBRIEFING ESTRATEGICO — ' + nome.toUpperCase() + '\nCEO: Camila Santos | Digital Coffee\n\n1. DIAGNOSTICO DO NEGOCIO\n[analise do negocio, momento atual, desafios especificos do nicho ' + nicho + ']\n\n2. OBJETIVO PRINCIPAL\n[objetivo: ' + objetivo + ' — como isso se traduz em acoes concretas]\n\n3. POSICIONAMENTO RECOMENDADO\n[como ' + nome + ' deve se posicionar no digital para se diferenciar no mercado de ' + cidade + ']\n\n4. PLANO DOS 3 PRIMEIROS MESES\nMes 1: [foco e acoes]\nMes 2: [foco e acoes]\nMes 3: [foco e acoes]\n\n5. PROXIMOS PASSOS IMEDIATOS\n1. [acao]\n2. [acao]\n3. [acao]\n\nSem emojis. Linguagem executiva. Especifico para ' + nicho + ' em ' + cidade + '.'
+    },
+    {
+      id: 'benicio', nome: 'Benício', cor: '#7c3aed',
+      grad: 'linear-gradient(145deg,#8b5cf6,#6d28d9)',
+      iconPath: 'M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z',
+      frente: 'Análise de Mercado',
+      system: base + ' Voce e o Benicio, estrategista independente da Digital Coffee.',
+      prompt: 'Crie uma ANALISE DE MERCADO completa para ' + nome + ' (nicho: ' + nicho + ', cidade: ' + cidade + ') no seguinte formato:\n\nANALISE DE MERCADO — ' + nome.toUpperCase() + '\nBenicio | Digital Coffee\n\n1. PANORAMA DO NICHO ' + nicho.toUpperCase() + '\n[como esta o mercado deste nicho no Brasil e especificamente em ' + cidade + ']\n\n2. OPORTUNIDADES IDENTIFICADAS\n1. [oportunidade especifica]\n2. [oportunidade especifica]\n3. [oportunidade especifica]\n\n3. RISCOS E ATENCAO\n[riscos concretos para este nicho]\n\n4. CONCORRENCIA LOCAL\n[como analisar e se diferenciar dos concorrentes em ' + cidade + ']\n\n5. TENDENCIAS DO NICHO (2026)\n[3-5 tendencias reais e aplicaveis para ' + nicho + ']\n\nSem emojis. Dados e analises reais do mercado.'
+    },
+    {
+      id: 'flavia', nome: 'Flávia', cor: '#2563eb',
+      grad: 'linear-gradient(145deg,#3b82f6,#1d4ed8)',
+      iconPath: 'M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z',
+      frente: 'Cronograma Mês 1',
+      system: base + ' Voce e a Flavia Silva, especialista em planejamento editorial da Digital Coffee.',
+      prompt: 'Crie o CRONOGRAMA EDITORIAL do primeiro mes para ' + nome + ' (nicho: ' + nicho + ', redes: ' + redes + ') no seguinte formato:\n\nCRONOGRAMA EDITORIAL — MES 1 — ' + nome.toUpperCase() + '\nFlavia Silva | Digital Coffee\n\nESTRATEGIA DO MES\nFoco: [foco especifico para comecar no digital para ' + nicho + ']\nPilares: [3-4 pilares de conteudo]\n\nSEMANA 1 — [TEMA]\nPOST 01\n- Dia: [dia]\n- Horario: [horario]\n- Formato: [formato]\n- Tema: [tema especifico]\n- CTA: [chamada para acao]\n\n[POST 02, 03, 04]\n\nSEMANA 2, 3, 4 — [mesma estrutura]\n\nTOTAL: [X] posts + [Y] stories/semana\n\nSem emojis. Posts especificos para ' + nicho + ', nao genericos.'
+    },
+    {
+      id: 'caua', nome: 'Cauã', cor: '#db2777',
+      grad: 'linear-gradient(145deg,#ec4899,#9d174d)',
+      iconPath: 'M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z',
+      frente: 'Identidade Visual',
+      system: base + ' Voce e o Caua, diretor de design da Digital Coffee.',
+      prompt: 'Crie o BRIEFING VISUAL completo para ' + nome + ' (nicho: ' + nicho + ') no seguinte formato:\n\nBRIEFING VISUAL — ' + nome.toUpperCase() + '\nCaua | Digital Coffee\n\n1. PALETA DE CORES\nCor primaria: [nome] — HEX #XXXXXX\nCor secundaria: [nome] — HEX #XXXXXX\nCor de destaque: [nome] — HEX #XXXXXX\nCor de fundo: [nome] — HEX #XXXXXX\nRegra: [X]% primaria / [X]% fundo / [X]% destaque\n\n2. TIPOGRAFIA\nFonte principal: [nome] — [peso] — titulos\nFonte secundaria: [nome] — corpo de texto\nJustificativa: [por que para ' + nicho + ']\n\n3. ESTILO VISUAL\n[descricao tecnica: clean/organico/premium/etc]\n\n4. ELEMENTOS PROIBIDOS\n[o que nao pode no visual deste nicho]\n\n5. REFERENCIAS\n[3 perfis/marcas com estilo similar e por que]\n\nSem emojis. HEX reais. Linguagem tecnica.'
+    },
+    {
+      id: 'rafa', nome: 'Rafa', cor: '#0891b2',
+      grad: 'linear-gradient(145deg,#0ea5e9,#0369a1)',
+      iconPath: 'M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z',
+      frente: 'Formatos e Roteiro Piloto',
+      system: base + ' Voce e o Rafa, roteirista da Digital Coffee.',
+      prompt: 'Crie os FORMATOS RECOMENDADOS e um ROTEIRO PILOTO para ' + nome + ' (nicho: ' + nicho + ', redes: ' + redes + ') no seguinte formato:\n\nFORMATOS E ROTEIRO PILOTO — ' + nome.toUpperCase() + '\nRafa | Digital Coffee\n\nFORMATOS PRIORITARIOS PARA ' + nicho.toUpperCase() + '\n1. [formato] — Por que: [justificativa] — Frequencia: [X/semana]\n2. [formato] — Por que: [justificativa] — Frequencia: [X/semana]\n3. [formato] — Por que: [justificativa] — Frequencia: [X/semana]\n\n---\n\nROTEIRO PILOTO — REELS DE APRESENTACAO\n' + nome + ' | por Rafa | Digital Coffee\n\nETAPA 1 — GANCHO (0-3s)\n\n[Fala]\n"[frase de abertura especifica para ' + nicho + ']"\n\n[TELA]\n[texto na tela]\n\n[SFX]\n[efeito sonoro]\n\nFuncao psicologica: [mecanismo de atencao]\n\nETAPA 2 — DESENROLAR (4-45s)\n\n[desenvolvimento do video]\n\nETAPA 3 — RECOMPENSA (45-55s)\n\n[Fala]\n"[entrega do valor]"\n\nETAPA 4 — FECHAMENTO (55-60s)\n\n[Fala]\n"[CTA]"\n\nSem emojis. Roteiro real para ' + nicho + '.'
+    }
   ];
+
+  _onbResultados = {};
+  _onbChatHistorico = {};
   const progWrap = document.getElementById('onb-agents-progress');
   progWrap.innerHTML = '';
-  let i = 0;
-  const interval = setInterval(() => {
-    if(i < agentesOnb.length) {
-      document.getElementById('onb-loading-msg').textContent = agentesOnb[i].msg;
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 12px;background:rgba(245,181,68,.06);border-radius:8px;font-size:11px;color:var(--gray)';
-      row.innerHTML = `<span style="color:var(--green)">✓</span><strong style="color:var(--white)">${agentesOnb[i].nome}</strong>${agentesOnb[i].msg}`;
-      progWrap.appendChild(row);
-      i++;
-    } else {
-      clearInterval(interval);
-      setTimeout(() => mostrarResultadoOnboarding(nome, nd, redes, cidade, objetivo, budget), 600);
+
+  agentes.forEach(function(a) {
+    const row = document.createElement('div');
+    row.id = 'onb-prog-' + a.id;
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--bg3);border-radius:10px;border:1px solid var(--border)';
+    row.innerHTML = '<div style="width:8px;height:8px;border-radius:50%;background:var(--gray2);flex-shrink:0;transition:.3s" id="onb-dot-'+a.id+'"></div>'
+      + '<div style="width:28px;height:28px;border-radius:8px;background:'+a.grad+';display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:white"><path d="'+a.iconPath+'"/></svg></div>'
+      + '<div style="flex:1"><div style="font-size:12px;font-weight:700;color:'+a.cor+'">'+a.nome+' <span style="color:var(--gray);font-weight:400">— '+a.frente+'</span></div>'
+      + '<div id="onb-txt-'+a.id+'" style="font-size:11px;color:var(--gray2);margin-top:2px">Aguardando...</div></div>';
+    progWrap.appendChild(row);
+  });
+
+  document.getElementById('onb-loading-msg').textContent = 'Agentes trabalhando em paralelo...';
+
+  const promises = agentes.map(async function(a) {
+    const dot = document.getElementById('onb-dot-' + a.id);
+    const txt = document.getElementById('onb-txt-' + a.id);
+    if (dot) { dot.style.background = '#f59e0b'; dot.style.boxShadow = '0 0 6px #f59e0b'; }
+    if (txt) txt.textContent = 'Gerando...';
+    try {
+      const r = await fetch('https://luna.adigitalcoffee.com/webhook/hub-claude-proxy', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({system: a.system, user: a.prompt})
+      });
+      const d = await r.json();
+      const texto = d.resposta || 'Erro ao gerar conteudo.';
+      _onbResultados[a.id] = Object.assign({}, a, {texto});
+      if (dot) { dot.style.background = 'var(--green)'; dot.style.boxShadow = '0 0 6px var(--green)'; }
+      if (txt) txt.textContent = 'Concluido';
+    } catch(e) {
+      _onbResultados[a.id] = Object.assign({}, a, {texto: 'Erro de conexao. Tente novamente.'});
+      if (dot) { dot.style.background = 'var(--red)'; dot.style.boxShadow = 'none'; }
+      if (txt) txt.textContent = 'Erro';
     }
-  }, 500);
+  });
+
+  await Promise.all(promises);
+  _mostrarResultadoOnboarding(nome, nicho, cidade, redes, objetivo, budget, agentes);
 }
-function mostrarResultadoOnboarding(nome, nd, redes, cidade, objetivo, budget) {
+
+function _mostrarResultadoOnboarding(nome, nicho, cidade, redes, objetivo, budget, agentes) {
   document.getElementById('onb-loading-section').style.display = 'none';
   document.getElementById('onb-result-section').style.display = 'block';
-  document.getElementById('onb-result-title').textContent = `✅ Onboarding completo — ${nome}`;
-  const objLabel = {leads:'Geração de leads',brand:'Construção de marca',vendas:'Aumento de vendas',engajamento:'Aumento de engajamento',trafego:'Tráfego para o site'}[objetivo] || 'Crescimento digital';
-  const budgetLabel = {sem:'Somente orgânico',ate500:'Até R$ 500/mês',ate2k:'R$ 500–2.000/mês','500a2k':'R$ 500–2.000/mês','2ka5k':'R$ 2.000–5.000/mês',acima5k:'Acima de R$ 5.000/mês'}[budget] || 'A definir';
-  const fmtTags = nd.formatos.map(f => `<span class="onb-tag">${f}</span>`).join('');
-  const horTags = nd.horarios.map(h => `<div style="margin-bottom:6px;font-size:12px;color:var(--gray2)">• ${h.replace(/\*\*(.+?)\*\*/g,'<strong style="color:var(--white)">$1</strong>')}</div>`).join('');
-  const trendTags = nd.tendencias.map(t => `<span class="onb-tag purple">${t}</span>`).join('');
-  const inspCards = nd.inspiracao.map(p => `<div class="onb-insp-card"><div class="onb-insp-av" style="background:${p.cor}">${p.nome.charAt(1)}</div><div><div style="font-size:12px;font-weight:700;color:var(--white)">${p.nome}</div><div style="font-size:11px;color:var(--gray)">${p.seg} seguidores · ${p.desc}</div></div></div>`).join('');
-  document.getElementById('onb-result-body').innerHTML = `
-    <div style="background:linear-gradient(135deg,rgba(245,181,68,.08),rgba(245,181,68,.02));border:1px solid rgba(245,181,68,.2);border-radius:10px;padding:16px 20px;margin-bottom:20px">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
-        <div style="width:36px;height:36px;border-radius:8px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#000">${nome.charAt(0)}</div>
-        <div><div style="font-size:15px;font-weight:800;color:var(--white)">${nome}</div><div style="font-size:11px;color:var(--gray)">${nd.label} · ${cidade} · ${redes}</div></div>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <span class="onb-tag">🎯 ${objLabel}</span>
-        <span class="onb-tag blue">💰 Tráfego: ${budgetLabel}</span>
-        <span class="onb-tag green">📱 ${redes}</span>
-      </div>
-    </div>
-    <div class="onb-section"><div class="onb-section-hd"><div class="onb-section-av" style="background:#b8720a">J</div><div class="onb-section-title">José — Briefing & Onboarding Completo</div></div><div class="onb-section-body">${nd.mercado.replace(/\n/g,'<br>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')}</div></div>
-    <div class="onb-section blue"><div class="onb-section-hd"><div class="onb-section-av" style="background:#a855f7">F</div><div class="onb-section-title" style="color:var(--blue)">Flávia — Cronograma Mensal de Conteúdo</div></div><div class="onb-section-body">${nd.cronograma.replace(/\n/g,'<br>').replace(/\*\*(.+?)\*\*/g,'<strong style="color:var(--white)">$1</strong>')}</div></div>
-    <div class="onb-section green"><div class="onb-section-hd"><div class="onb-section-av" style="background:#f97316">R</div><div class="onb-section-title" style="color:var(--green)">Rafa & Cauã — Formatos Recomendados</div></div><div class="onb-section-body">${fmtTags}</div></div>
-    <div class="onb-section" style="border-color:var(--blue)"><div class="onb-section-hd"><div class="onb-section-av" style="background:#a855f7">K</div><div class="onb-section-title" style="color:var(--blue)">Katia — Horários de Publicação</div></div><div class="onb-section-body">${horTags}</div></div>
-    <div class="onb-section purple"><div class="onb-section-hd"><div class="onb-section-av" style="background:#3b82f6">N</div><div class="onb-section-title" style="color:var(--purple)">Noah & Benício — Tendências do Nicho</div></div><div class="onb-section-body">${trendTags}</div></div>
-    <div class="onb-section red"><div class="onb-section-hd"><div class="onb-section-av" style="background:#b8720a">★</div><div class="onb-section-title" style="color:var(--red)">Benício — Estratégia dos 3 Primeiros Meses</div></div><div class="onb-section-body">${nd.estrategia.replace(/\n/g,'<br>').replace(/\*\*(.+?)\*\*/g,'<strong style="color:var(--white)">$1</strong>')}</div></div>
-    <div class="onb-section" style="border-color:var(--green)"><div class="onb-section-hd"><div class="onb-section-av" style="background:#22c55e">★</div><div class="onb-section-title" style="color:var(--green)">Noah — Perfis de Inspiração do Nicho</div></div><div class="onb-section-body">${inspCards}</div></div>
-    <div style="margin-top:16px;padding:12px 16px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;font-size:11px;color:var(--gray)">✅ Onboarding gerado por 8 agentes da Digital Coffee · ${new Date().toLocaleDateString('pt-BR')} · Próximo passo: agendar reunião de alinhamento com o cliente</div>`;
-  // Mostra botão Salvar na ficha
+  document.getElementById('onb-result-title').textContent = 'Onboarding completo — ' + nome;
+
+  const cards = agentes.map(function(a) {
+    const r = _onbResultados[a.id] || a;
+    const textoHtml = (r.texto || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+      .replace(/^#{1,3}\s(.+)$/gm,'<div style="font-size:13px;font-weight:700;color:var(--white);margin:10px 0 4px">$1</div>')
+      .replace(/\r?\n/g,'<br>');
+    return '<div style="background:var(--bg2);border:1px solid var(--border);border-left:3px solid '+a.cor+';border-radius:12px;overflow:hidden;margin-bottom:8px">'
+      + '<div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3)">'
+      + '<div style="width:36px;height:36px;border-radius:10px;background:'+a.grad+';display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);flex-shrink:0"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white"><path d="'+a.iconPath+'"/></svg></div>'
+      + '<div style="flex:1"><div style="font-size:13px;font-weight:700;color:'+a.cor+'">'+a.nome+'</div><div style="font-size:11px;color:var(--gray)">'+a.frente+'</div></div>'
+      + '<button onclick="_onbAbrirChat(\''+a.id+'\')" style="background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:var(--gray);font-size:11px;padding:5px 12px;cursor:pointer;font-family:inherit">Conversar</button>'
+      + '</div>'
+      + '<div style="padding:16px 18px;font-size:12px;line-height:1.8;color:var(--gray)" id="onb-txt-res-'+a.id+'">'+textoHtml+'</div>'
+      + '<div id="onb-chat-'+a.id+'" style="display:none;border-top:1px solid var(--border);padding:14px 18px;background:var(--bg3)">'
+      + '<div id="onb-msgs-'+a.id+'" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;max-height:200px;overflow-y:auto"></div>'
+      + '<div style="display:flex;gap:8px">'
+      + '<input id="onb-inp-'+a.id+'" placeholder="Peca um ajuste para '+a.nome+'..." style="flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:inherit;font-size:12px;padding:8px 12px;outline:none" onkeydown="if(event.key===\'Enter\')_onbEnviarChat(\''+a.id+'\')">'
+      + '<button onclick="_onbEnviarChat(\''+a.id+'\')" style="background:'+a.cor+';color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:12px;font-weight:700">Enviar</button>'
+      + '</div></div>'
+      + '</div>';
+  }).join('');
+
+  document.getElementById('onb-result-body').innerHTML = cards
+    + '<div style="margin-top:16px;padding:12px 16px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;font-size:11px;color:var(--gray)">Onboarding gerado por IA da Digital Coffee · ' + new Date().toLocaleDateString('pt-BR') + ' · Clique em "Conversar" em qualquer agente para pedir ajustes</div>';
+
   const saveBar = document.getElementById('onb-save-bar');
-  if (saveBar) { saveBar.style.display = 'flex'; }
+  if (saveBar) saveBar.style.display = 'flex';
   const savBtn = document.getElementById('onb-salvar-btn');
   if (savBtn) { savBtn.disabled = false; savBtn.textContent = 'Salvar na Ficha'; }
+}
+
+function _onbAbrirChat(id) {
+  var chat = document.getElementById('onb-chat-' + id);
+  if (!chat) return;
+  chat.style.display = chat.style.display === 'none' ? 'block' : 'none';
+  if (chat.style.display === 'block') {
+    var inp = document.getElementById('onb-inp-' + id);
+    if (inp) inp.focus();
+  }
+}
+
+async function _onbEnviarChat(id) {
+  var inp = document.getElementById('onb-inp-' + id);
+  var texto = inp ? inp.value.trim() : '';
+  if (!texto) return;
+  inp.value = '';
+  inp.disabled = true;
+  var r = _onbResultados[id];
+  if (!r) return;
+  var msgs = document.getElementById('onb-msgs-' + id);
+  msgs.innerHTML += '<div style="align-self:flex-end;background:var(--gold);color:#000;padding:8px 12px;border-radius:10px 10px 2px 10px;font-size:11px;max-width:80%">'+texto+'</div>';
+  var typing = document.createElement('div');
+  typing.style.cssText = 'align-self:flex-start;background:var(--bg2);border:1px solid var(--border);padding:8px 12px;border-radius:2px 10px 10px 10px;font-size:11px;color:var(--gray)';
+  typing.textContent = r.nome + ' ajustando...';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+  if (!_onbChatHistorico[id]) _onbChatHistorico[id] = [];
+  _onbChatHistorico[id].push({role:'user', content: texto});
+  var conteudoAtual = document.getElementById('onb-txt-res-' + id) ? document.getElementById('onb-txt-res-' + id).innerText : r.texto;
+  var systemPrompt = 'Voce e ' + r.nome + ', especialista da Digital Coffee. Voce gerou este conteudo para o cliente:\n\n' + conteudoAtual + '\n\nO cliente quer ajustes. Refine e entregue a versao melhorada mantendo o formato profissional sem emojis.';
+  try {
+    var resp = await fetch('https://luna.adigitalcoffee.com/webhook/hub-claude-proxy', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system: systemPrompt, user: texto})
+    });
+    var d = await resp.json();
+    var reply = d.resposta || 'Nao consegui processar. Tente novamente.';
+    _onbChatHistorico[id].push({role:'assistant', content: reply});
+    typing.remove();
+    var replyHtml = reply.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\r?\n/g,'<br>');
+    msgs.innerHTML += '<div style="align-self:flex-start;background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-left:3px solid '+r.cor+';padding:10px 14px;border-radius:2px 10px 10px 10px;font-size:11px;line-height:1.7;max-width:90%;color:var(--gray)">'+replyHtml+'</div>';
+    var textoEl = document.getElementById('onb-txt-res-' + id);
+    if (textoEl) textoEl.innerHTML = replyHtml;
+    _onbResultados[id].texto = reply;
+  } catch(e) {
+    typing.remove();
+    msgs.innerHTML += '<div style="color:var(--red);font-size:11px">Erro ao conectar.</div>';
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+  inp.disabled = false;
+  inp.focus();
 }
 function exportarOnboarding() {
   const body = document.getElementById('onb-result-body');
@@ -9418,19 +9546,22 @@ function exportarOnboarding() {
         </div>
         <div class="form-group">
           <label class="form-label">Nicho / Segmento *</label>
-          <select class="form-select" id="onb-nicho">
+          <select class="form-select" id="onb-nicho" onchange="_onbToggleNichoCustom(this.value)">
             <option value="">Selecione o nicho</option>
-            <option value="saude">Saúde / Fisioterapia / Medicina</option>
-            <option value="alimentacao">Alimentação / Restaurante / Confeitaria</option>
-            <option value="pet">Pet / Veterinária / Agropet</option>
-            <option value="construcao">Construção / Reforma / Materiais</option>
-            <option value="financeiro">Financeiro / Contabilidade / Tributário</option>
-            <option value="estetica">Estética / Beleza / Cosméticos</option>
-            <option value="moda">Moda / Vestuário / Boutique</option>
-            <option value="educacao">Educação / Cursos / Coaching</option>
-            <option value="imoveis">Imóveis / Construtora / Incorporadora</option>
-            <option value="outro">Outro</option>
+            <option value="Saúde / Fisioterapia / Medicina">Saúde / Fisioterapia / Medicina</option>
+            <option value="Alimentação / Restaurante / Confeitaria">Alimentação / Restaurante / Confeitaria</option>
+            <option value="Pet / Veterinária / Agropet">Pet / Veterinária / Agropet</option>
+            <option value="Construção / Reforma / Materiais">Construção / Reforma / Materiais</option>
+            <option value="Financeiro / Contabilidade / Tributário">Financeiro / Contabilidade / Tributário</option>
+            <option value="Estética / Beleza / Cosméticos">Estética / Beleza / Cosméticos</option>
+            <option value="Moda / Vestuário / Boutique">Moda / Vestuário / Boutique</option>
+            <option value="Educação / Cursos / Coaching">Educação / Cursos / Coaching</option>
+            <option value="Imóveis / Construtora / Incorporadora">Imóveis / Construtora / Incorporadora</option>
+            <option value="Psiquiatria / Saúde Mental">Psiquiatria / Saúde Mental</option>
+            <option value="Advocacia / Jurídico">Advocacia / Jurídico</option>
+            <option value="outro">Outro (digitar)</option>
           </select>
+          <input id="onb-nicho-custom" class="form-input" placeholder="Digite o nicho do cliente..." style="display:none;margin-top:8px" />
         </div>
       </div>
       <div class="form-group" style="margin-bottom:16px">
