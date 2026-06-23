@@ -4471,10 +4471,10 @@ async function sendCI() {
     try {
       const agencyContext = `Você é o Coffezinho, IA estratégica da agência Digital Coffee de Pirapora MG. Dados da agência: 14 clientes ativos, MRR ~R$7.880, equipe: Rafael (designer), Levy (videomaker), Camila (CEO), agentes IA Luna, Mila, Kaka, Noah, Cauã, Benjamim. Responda com insights práticos sobre marketing digital, gestão de agência, clientes e estratégias. Use dados reais da agência quando relevante.`;
       const histMsgs = _benicioHistory.slice(-12).map(h => ({role: h.role, content: h.content}));
-      const ar = await fetch('https://api.anthropic.com/v1/messages', {
+      const ar = await fetch('https://luna.adigitalcoffee.com/webhook/hub-claude-proxy', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 800, system: agencyContext, messages: histMsgs })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ system: agencyContext, user: text })
       });
       thinkEl.remove();
       if (ar.ok) {
@@ -11390,10 +11390,10 @@ async function enviarNovoProjetoIA() {
   if (!resultado) {
     try {
       var prompt = `Você é o sistema de gestão da agência Digital Coffee. Gere um plano de projeto detalhado para o cliente "${cliente}".\n\nBrief: ${brief}\nTipo de projeto: ${tipo}\n\nResponda APENAS com JSON válido no seguinte formato (sem markdown, sem explicações):\n{"ok":true,"plano":"Resumo estratégico em 2 frases","tarefas":[{"agente":"Nome do Agente","tarefa":"Descrição da tarefa","pilar":"Criação|Aquisição|Conteúdo|Tecnologia|Comercial","dia":"D+1 até D+30","cor":"#hex"}]}\n\nCrie entre 6 e 10 tarefas realistas distribuídas entre os agentes: Luna, Mila, Kaka, Noah, Cauã, Levy, Rafael, Benjamim, Ana. Foque no tipo de projeto solicitado.`;
-      var ar = await fetch('https://api.anthropic.com/v1/messages', {
+      var ar = await fetch('https://luna.adigitalcoffee.com/webhook/hub-claude-proxy', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1200, messages: [{ role: 'user', content: prompt }] })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ system: 'Voce e o sistema de gestao da agencia Digital Coffee. Responda APENAS com JSON valido.', user: prompt })
       });
       if (ar.ok) {
         var ad = await ar.json();
@@ -12096,15 +12096,13 @@ function _getKey(nome) {
 }
 
 async function _callClaude(systemPrompt, userPrompt) {
-  const key = _getKey('Anthropic');
-  const headers = { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' };
-  if (key) headers['x-api-key'] = key;
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST', headers,
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1200, system: systemPrompt, messages: [{ role: 'user', content: userPrompt }] })
+  const r = await fetch('https://luna.adigitalcoffee.com/webhook/hub-claude-proxy', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ system: systemPrompt, user: userPrompt })
   });
   const d = await r.json();
-  return d.content && d.content[0] ? d.content[0].text : '';
+  return d.resposta || '';
 }
 
 async function _callGemini(prompt) {
