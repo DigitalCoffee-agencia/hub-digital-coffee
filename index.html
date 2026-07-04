@@ -1194,7 +1194,7 @@ body.edit-mode .edit-banner{display:block}
         <input class="cli-search-bar" id="cli-search" type="text" placeholder="Buscar por nome, segmento, responsável..." oninput="filtrarClientes(this.value)">
       </div>
       <div class="cli-stats">
-        <div class="cli-stat"><div class="cli-stat-label">Total de Clientes</div><div class="cli-stat-val">14</div><div class="cli-stat-sub">clientes ativos</div></div>
+        <div class="cli-stat"><div class="cli-stat-label">Total de Clientes</div><div class="cli-stat-val">16</div><div class="cli-stat-sub">clientes ativos</div></div>
         <div class="cli-stat"><div class="cli-stat-label">Novos este Mês</div><div class="cli-stat-val" style="color:var(--green)">2</div><div class="cli-stat-sub">desde 01/06/2026</div></div>
         <div class="cli-stat"><div class="cli-stat-label">Vencimentos Hoje</div><div class="cli-stat-val" style="color:var(--gold)">3</div><div class="cli-stat-sub">Cartão SS · Odonto · Disque Pet</div></div>
         <div class="cli-stat"><div class="cli-stat-label">Valor Mensal Total</div><div class="cli-stat-val" style="color:var(--gold)">R$ 7.880</div><div class="cli-stat-sub">recorrência mensal</div></div>
@@ -1355,6 +1355,17 @@ body.edit-mode .edit-banner{display:block}
           </div>
           <div class="cli-divider"></div>
           <div class="cli-footer"><div class="cli-resp"><div class="cli-resp-av" style="background:linear-gradient(135deg,#c084fc,#7c3aed)">C</div>Camila</div><div class="cli-valor" style="color:var(--gray)">Permuta</div></div>
+        </div>
+
+        <div class="cli-card" onclick="openFicha('Churrascaria Na Brasa')">
+          <span class="cli-badge-new">Novo</span>
+          <div class="cli-card-top"><div class="cli-av" style="background:linear-gradient(135deg,#f97316,#c2410c)">CN</div><div><div class="cli-name">Churrascaria Na Brasa</div><div class="cli-segment">Restaurante · Pirapora MG</div></div></div>
+          <div class="cli-info">
+            <div class="cli-info-row"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Camila</div>
+            <div class="cli-info-row"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>CNPJ: 47.953.023/0001-84 · Gestão Pro</div>
+          </div>
+          <div class="cli-divider"></div>
+          <div class="cli-footer"><div class="cli-resp"><div class="cli-resp-av" style="background:linear-gradient(135deg,#c084fc,#7c3aed)">C</div>Camila</div><div class="cli-valor" style="color:var(--gray)">A definir</div></div>
         </div>
       </div>
     </div>
@@ -4086,7 +4097,7 @@ var _cliSegmentos = {
   'Cartão São Sebastião':'Financeiro','Odonto São Sebastião':'Odontologia','Disque Pet':'Pet Shop',
   'Floricultura Império':'Flores & Presentes','Dás Gerais':'Alimentação','Conque Blocos':'Construção',
   'Eterno Sabor':'Gastronomia','Dr. Vitor D\'Ângeles':'Medicina','Arruda Cozinha Vegana':'Alimentação',
-  'Cervejaria das Gerais':'Bebidas','Ativar HSE':'Consultoria'
+  'Cervejaria das Gerais':'Bebidas','Ativar HSE':'Consultoria','Churrascaria Na Brasa':'Restaurante'
 };
 // Dados pré-preenchidos por cliente (índices = posição dos .f-val2 no DOM)
 // 0=Nome resp, 1=Cargo, 2=WhatsApp, 3=Email, 4=Instagram pessoal, 5=Localização
@@ -4106,21 +4117,23 @@ var _cliBaseData = {
   'Eterno Sabor':          {0:'Amanda',        2:'(38) 99196-7927', 5:'Pirapora, MG', 12:'Gastronomia'},
   'Dr. Vitor':             {0:'Dr. Vitor D\'Angelis', 1:'Médico', 2:'(38) 99821-4426', 5:'Pirapora, MG', 11:'R. Paraíba, 82 - Santo Antônio, Pirapora MG', 12:'Medicina'},
   'Prefeitura Lassance':   {0:'Carol',         2:'(38) 99961-8087', 5:'Lassance, MG', 12:'Comunicação Institucional'},
-  'Ativar HSE':            {0:'Rosi',          2:'(38) 99929-0014', 5:'Pirapora, MG', 11:'Av. Newton Jose Lopes, 70 - Nova Pirapora, Pirapora MG', 12:'Consultoria HSE'}
+  'Ativar HSE':            {0:'Rosi',          2:'(38) 99929-0014', 5:'Pirapora, MG', 11:'Av. Newton Jose Lopes, 70 - Nova Pirapora, Pirapora MG', 12:'Consultoria HSE'},
+  'Churrascaria Na Brasa': {0:'Camila',        5:'Pirapora, MG', 12:'Restaurante / Churrascaria'}
 };
 var _cliOnboardingNicho = {
   'Fisio Vida':'saude','Financonte':'financeiro','Reforma Tributária':'financeiro',
   'Cartão São Sebastião':'financeiro','Odonto São Sebastião':'saude','Disque Pet':'pet',
   'Conque Blocos':'construcao','Dás Gerais':'alimentacao','Arruda Cozinha Vegana':'alimentacao',
   'Floricultura Império':'outro','Eterno Sabor':'alimentacao','Dr. Vitor':'saude',
-  'Prefeitura Lassance':'outro','Ativar HSE':'outro','Rose Beatriz':'outro','Arruda Vegana':'alimentacao'
+  'Prefeitura Lassance':'outro','Ativar HSE':'outro','Rose Beatriz':'outro','Arruda Vegana':'alimentacao',
+  'Churrascaria Na Brasa':'alimentacao'
 };
 var _cliOnboardingCidade = {
   'Fisio Vida':'Pirapora, MG','Financonte':'Pirapora, MG','Reforma Tributária':'Pirapora, MG',
   'Cartão São Sebastião':'São Sebastião, MG','Odonto São Sebastião':'São Sebastião, MG',
   'Disque Pet':'Pirapora, MG','Conque Blocos':'Pirapora, MG','Dás Gerais':'Pirapora, MG',
   'Arruda Cozinha Vegana':'Belo Horizonte, MG','Floricultura Império':'Pirapora, MG',
-  'Eterno Sabor':'Pirapora, MG','Dr. Vitor':'Pirapora, MG','Prefeitura Lassance':'Lassance, MG',
+  'Eterno Sabor':'Pirapora, MG','Dr. Vitor':'Pirapora, MG','Prefeitura Lassance':'Lassance, MG','Churrascaria Na Brasa':'Pirapora, MG',
   'Ativar HSE':'Pirapora, MG','Arruda Vegana':'Belo Horizonte, MG'
 };
 
@@ -10057,7 +10070,7 @@ function exportarOnboarding() {
         <input class="form-input" id="cr-fone" placeholder="(00) 00000-0000">
       </div>
       <div class="form-group" style="margin-bottom:14px">
-        <label class="form-label">🎂 Data de nascimento</label>
+        <label class="form-label">Data de Início do Contrato</label>
         <input class="form-input" id="cr-nasc" type="date">
       </div>
       <div style="display:flex;gap:10px;margin-top:4px">
@@ -10619,7 +10632,7 @@ function exportarOnboarding() {
             <input class="form-input" id="mc-cpfcnpj" placeholder="00.000.000/0000-00" />
           </div>
           <div class="form-group">
-            <label class="form-label">Data de Nascimento</label>
+            <label class="form-label">Data de Início do Contrato</label>
             <input class="form-input" id="mc-nascimento" type="date" />
           </div>
         </div>
